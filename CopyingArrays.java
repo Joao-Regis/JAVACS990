@@ -16,13 +16,13 @@ public class CopyingArrays {
 
         for(int index = 0; index < firstArray.length; index++)
             {
-                System.out.print(firstArray[index] + ' ');
+                System.out.print(firstArray[index] + " ");
             }
         System.out.println();
         
         for(int index = 0; index < secondArray.length; index++)
         {
-            System.out.print(secondArray[index] + ' ');
+            System.out.print(secondArray[index] + " ");
         }
     }
 }
