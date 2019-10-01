@@ -29,7 +29,7 @@ public class SmallestArrayItem {
             arrTwo[i] = keyboard.nextInt();
         }
         
-
+        //missing find lowest of arraay one first.
 
         int commonInt = 0;
         for(int i = 0; i < arrOne.length; i++)
