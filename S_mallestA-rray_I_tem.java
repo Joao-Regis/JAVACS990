@@ -53,7 +53,7 @@ public class SmallestArrayItem {
         }
         else
         {
-            System.out.println("There is no smallest matching iteger!");
+            System.out.println("There is no smallest matching integer!");
         }
 
         keyboard.close();
