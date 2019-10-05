@@ -49,3 +49,28 @@ public class ParkingCarSimulator
 	}
 
 }
+
+class ParkedCar
+{
+	
+}
+
+
+class ParkingMeter
+{
+	
+}
+
+
+class ParkingTicket
+{
+	
+}
+
+
+class PoliceOfficer
+{
+	
+}
+
+
