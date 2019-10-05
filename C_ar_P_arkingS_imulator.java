@@ -26,6 +26,8 @@ public class ParkingCarSimulator
 		System.out.println("Enter the car's make");
 		make = keyboard.nextLine();
 		
+		keyboard.nextLine();
+		
 		System.out.println("Enter the car's model");
 		model = keyboard.nextLine();
 		
