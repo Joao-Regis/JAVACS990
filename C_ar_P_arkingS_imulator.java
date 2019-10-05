@@ -23,10 +23,10 @@ public class ParkingCarSimulator
 		System.out.println("Enter the officer's badge number");
 		badge = keyboard.nextInt();
 		
+		keyboard.nextLine();
+		
 		System.out.println("Enter the car's make");
 		make = keyboard.nextLine();
-		
-		keyboard.nextLine();
 		
 		System.out.println("Enter the car's model");
 		model = keyboard.nextLine();
@@ -44,32 +44,59 @@ public class ParkingCarSimulator
 					"minutes purchased on the meter");
 		minPurchased = keyboard.nextInt();
 		
+		PoliceOfficer copper = new PoliceOfficer(offName, badge);
 		
-		minPurchased = keyboard.nextInt();
+		ParkedCar automobile = new ParkedCar(make, model, color, lic, minOnCar);
+		
+		ParkingMeter theMeter = new ParkingMeter(minPurchased);
+		
+		copper.checkExpiration(automobile, theMeter);
 		
 		keyboard.close();
 	}
+	
+	
 
 }
 
+
 class ParkedCar
 {
-	String make;
-	String model;
-	String color;
-	String lic;
+	String vehicleMake;
+	String vehicleModel;
+	String vehicleColor;
+	String vehicleLic;
 	int minOnCar;
+	
+	
+	ParkedCar(String aMake, String aModel, String aColor, 
+			String  aLic, int aTimeAmount)
+	{
+		vehicleMake = aMake;
+		vehicleModel = aModel;
+		vehicleColor = aColor;
+		vehicleLic = aLic;
+	}
 }
 
 
 class ParkingMeter
 {
-	int minPurchased;
+	int timePurchased;
+	ParkingMeter(int timePaidFor)
+	{
+		timePurchased = timePaidFor;
+	}
 }
 
 
 class ParkingTicket
 {
+	ParkingTicket()
+	{
+		
+	}
+	
 	public ParkedCar getCarInfo()
 	{
 		return ???;
@@ -93,9 +120,28 @@ class PoliceOfficer
 	String offName;
 	int badge;
 	
+	PoliceOfficer(String anOffName, int aBadgeNum)
+	{
+		offName = anOffName;
+		badge = aBadgeNum;
+	}
+	
 	public boolean checkExpiration(ParkedCar aCar, ParkingMeter aMeter)
 	{
 		return ???;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
