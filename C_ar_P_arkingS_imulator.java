@@ -52,25 +52,48 @@ public class ParkingCarSimulator
 
 class ParkedCar
 {
-	
+	String make;
+	String model;
+	String color;
+	String lic;
+	int minOnCar;
 }
 
 
 class ParkingMeter
 {
-	
+	int minPurchased;
 }
 
 
 class ParkingTicket
 {
+	public ParkedCar getCarInfo()
+	{
+		return ???;
+	}
+	
+	public double getFine()
+	{
+		return ???;
+	}
+	
+	public PoliceOfficer getOfficerInfo()
+	{
+		return ???;
+	}
 	
 }
 
 
 class PoliceOfficer
 {
+	String offName;
+	int badge;
 	
+	public boolean checkExpiration(ParkedCar aCar, ParkingMeter aMeter)
+	{
+		return ???;
+	}
 }
-
 
