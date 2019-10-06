@@ -96,6 +96,11 @@ class ParkingMeter
 	{
 		timePurchased = timePaidFor;
 	}
+	
+	ParkingMeter(ParkingMeter pmObjToBeCopied)
+	{
+		timePurchased = pmObjToBeCopied.timePurchased;
+	}
 }
 
 
@@ -139,7 +144,7 @@ class PoliceOfficer
 		offName = anOffName;
 		badge = aBadgeNum;
 		polOffsParkedCar = new ParkedCar(inspParkedCar);
-		polOffsParkingMeter = 
+		polOffsParkingMeter = new ParkingMeter(inspParkingMeter);
 	}
 	
 	
