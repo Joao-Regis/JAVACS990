@@ -44,11 +44,15 @@ public class ParkingCarSimulator
 					"minutes purchased on the meter");
 		minPurchased = keyboard.nextInt();
 		
-		PoliceOfficer copper = new PoliceOfficer(offName, badge);
+		
 		
 		ParkedCar automobile = new ParkedCar(make, model, color, lic, minOnCar);
 		
 		ParkingMeter theMeter = new ParkingMeter(minPurchased);
+					
+		PoliceOfficer copper = new PoliceOfficer(offName, badge, automobile, theMeter);
+				
+		ParkingTicket fine = new ParkingTicket(copper, automobile, theMeter);
 		
 		copper.checkExpiration(automobile, theMeter);
 		
@@ -77,6 +81,11 @@ class ParkedCar
 		vehicleColor = aColor;
 		vehicleLic = aLic;
 	}
+	
+	ParkedCar(ParkedCar copyOfCarObj)
+	{
+		
+	}
 }
 
 
@@ -92,11 +101,14 @@ class ParkingMeter
 
 class ParkingTicket
 {
-	ParkingTicket()
+	ParkingTicket(PoliceOfficer objPO, ParkedCar objPC, ParkingMeter objPM)
 	{
+		
 		
 	}
 	
+	
+	/*
 	public ParkedCar getCarInfo()
 	{
 		return ???;
@@ -111,7 +123,7 @@ class ParkingTicket
 	{
 		return ???;
 	}
-	
+	*/
 }
 
 
@@ -119,12 +131,17 @@ class PoliceOfficer
 {
 	String offName;
 	int badge;
+	ParkedCar polOffsParkedCar;
+	ParkingMeter polOffsParkingMeter;
 	
-	PoliceOfficer(String anOffName, int aBadgeNum)
+	PoliceOfficer(String anOffName, int aBadgeNum, ParkedCar inspParkedCar, ParkingMeter inspParkingMeter)
 	{
 		offName = anOffName;
 		badge = aBadgeNum;
+		polOffsParkedCar = new ParkedCar(inspParkedCar);
+		polOffsParkingMeter = 
 	}
+	
 	
 	public boolean checkExpiration(ParkedCar aCar, ParkingMeter aMeter)
 	{
