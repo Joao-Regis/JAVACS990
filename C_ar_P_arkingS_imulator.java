@@ -84,7 +84,22 @@ class ParkedCar
 	
 	ParkedCar(ParkedCar copyOfCarObj)
 	{
-		
+		vehicleMake = copyOfCarObj.vehicleMake;
+		vehicleModel = copyOfCarObj.vehicleModel;
+		vehicleColor = copyOfCarObj.vehicleColor;
+		vehicleLic = copyOfCarObj.vehicleLic;
+		minOnCar = copyOfCarObj.minOnCar;
+	}
+	
+	public String toString()
+	{
+		String str = "Make: " + vehicleMake +
+                "\nModel: " + vehicleModel +
+                "\nColor: " + vehicleColor +
+                "\nLicense Number: " + vehicleLic +
+                "\nMinutes Parked: " + minOnCar;
+   
+		return str;
 	}
 }
 
@@ -92,6 +107,7 @@ class ParkedCar
 class ParkingMeter
 {
 	int timePurchased;
+	
 	ParkingMeter(int timePaidFor)
 	{
 		timePurchased = timePaidFor;
@@ -106,10 +122,14 @@ class ParkingMeter
 
 class ParkingTicket
 {
+	PoliceOfficer ptsPolOff;
+	ParkedCar ptsPrkdCr;
+	ParkingMeter ptsPrkngMtr;
 	ParkingTicket(PoliceOfficer objPO, ParkedCar objPC, ParkingMeter objPM)
 	{
-		
-		
+		ptsPolOff = new PoliceOfficer(objPO);
+		ptsPrkdCr = new ParkedCar(objPC);
+		ptsPrkngMtr = new ParkingMeter(objPM);
 	}
 	
 	
@@ -148,9 +168,26 @@ class PoliceOfficer
 	}
 	
 	
+	PoliceOfficer(PoliceOfficer poObjToCopy)
+	{
+		offName = poObjToCopy.offName;
+		badge = poObjToCopy.badge;
+		polOffsParkedCar = new ParkedCar(poObjToCopy.polOffsParkedCar);
+		polOffsParkingMeter = new ParkingMeter(poObjToCopy.polOffsParkingMeter);
+	}
+	
+	
+	
 	public boolean checkExpiration(ParkedCar aCar, ParkingMeter aMeter)
 	{
-		return ???;
+		boolean expired = false;
+		
+		if(polOffsParkedCar.minOnCar > polOffsParkingMeter.timePurchased)
+		{
+			expired = true;
+		}
+
+		return expired;
 	}
 }
 
