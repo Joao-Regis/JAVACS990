@@ -20,7 +20,7 @@ public class ParkingCarSimulator
 		System.out.println("Enter the officer's name");
 		offName = keyboard.nextLine();
 		
-		System.out.println("Enter the officer's badge number");
+		System.out.println("Enter officer's badge number");
 		badge = keyboard.nextInt();
 		
 		keyboard.nextLine();
@@ -34,13 +34,13 @@ public class ParkingCarSimulator
 		System.out.println("Enter the car's color");
 		color = keyboard.nextLine();
 		
-		System.out.println("Enter the car's license number");
+		System.out.println("Enter the car's liscense number");
 		lic = keyboard.nextLine();
 		
-		System.out.println("Enter minutes on car");
+		System.out.println("Enter Minutes on car");
 		minOnCar = keyboard.nextInt();
 		
-		System.out.println("Enter the number of" +
+		System.out.println("Enter the number of " +
 					"minutes purchased on the meter");
 		minPurchased = keyboard.nextInt();
 		
@@ -90,7 +90,67 @@ class ParkedCar
 		vehicleLic = copyOfCarObj.vehicleLic;
 		minOnCar = copyOfCarObj.minOnCar;
 	}
-	
+    
+    
+    public void setVehMake(String aMake)
+   {
+      vehicleMake = aMake;
+   }
+
+
+   public void setVehModel(String aModel)
+   {
+      vehicleModel = aModel;
+   }
+
+
+   public void setVehColor(String aColor)
+   {
+      vehicleColor = aColor;
+   }
+
+
+   public void setVehLicNum(String aLicense)
+   {
+      vehicleLic = aLicense;
+   }
+
+
+   public void setVehMinOnCar(int aMinOnCar)
+   {
+      minuOnCar= aMinOnCar;
+   }
+
+
+   public String getVehMake()
+   {
+      return vehicleMake;
+   }
+   
+   public String getVehModel()
+   {
+      return vehicleModel;
+   }
+
+   
+   public String getVehColor()
+   {
+      return vehicleColor;
+   }
+
+
+   public String getVehLicenseNumber()
+   {
+      return vehicleLic;
+   }
+
+
+   public int getVehMinOnCar()
+   {
+      return minuOnCar;
+   }
+
+
 	public String toString()
 	{
 		String str = "Make: " + vehicleMake +
@@ -116,7 +176,17 @@ class ParkingMeter
 	ParkingMeter(ParkingMeter pmObjToBeCopied)
 	{
 		timePurchased = pmObjToBeCopied.timePurchased;
-	}
+    }
+    
+    public void setTimePurchased(int tPurchased)
+    {
+        timePurchased = tPurchased;
+    }
+
+    public int getTimePurchased()
+    {
+        return timePurchased;
+    }
 }
 
 
@@ -188,19 +258,14 @@ class PoliceOfficer
 		}
 
 		return expired;
+    }
+    
+    public String toString()
+	{
+		String str = "Name: " + offName +
+        "\nBadgeNumber: " + badge;
+
+        return str;
 	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
