@@ -14,8 +14,7 @@ public class ParkingCarSimulator
 		String lic;
 		int minOnCar;
 		int minPurchased;
-		double fineFirstHour = 25.0;
-		double finePerHourAfter1stHour = 10.0;
+		
 		
 		System.out.println("Enter the officer's name");
 		offName = keyboard.nextLine();
@@ -52,9 +51,16 @@ public class ParkingCarSimulator
 					
 		PoliceOfficer copper = new PoliceOfficer(offName, badge, automobile, theMeter);
 				
-		ParkingTicket fine = new ParkingTicket(copper, automobile, theMeter);
+		//ParkingTicket fine = new ParkingTicket(copper, automobile, theMeter);
 		
-		copper.checkExpiration(automobile, theMeter);
+        copper.checkExpiration(automobile, theMeter);
+        
+        if (minOnCar > minPurchased)
+            System.out.println(theTicket);
+        else
+            System.out.println("The car parking limits are valid");
+
+
 		
 		keyboard.close();
 	}
@@ -118,7 +124,7 @@ class ParkedCar
 
    public void setVehMinOnCar(int aMinOnCar)
    {
-      minuOnCar= aMinOnCar;
+      minOnCar= aMinOnCar;
    }
 
 
@@ -147,7 +153,7 @@ class ParkedCar
 
    public int getVehMinOnCar()
    {
-      return minuOnCar;
+      return minOnCar;
    }
 
 
@@ -192,33 +198,40 @@ class ParkingMeter
 
 class ParkingTicket
 {
-	PoliceOfficer ptsPolOff;
+    
+    double fineFirstHour = 25.0;
+	double finePerHourAfter1stHour = 10.0;
+    
+    PoliceOfficer ptsPolOff;
 	ParkedCar ptsPrkdCr;
-	ParkingMeter ptsPrkngMtr;
-	ParkingTicket(PoliceOfficer objPO, ParkedCar objPC, ParkingMeter objPM)
+    ParkingMeter ptsPrkngMtr;
+    
+
+
+	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
 	{
-		ptsPolOff = new PoliceOfficer(objPO);
+		//ptsPolOff = new PoliceOfficer(objPO);
 		ptsPrkdCr = new ParkedCar(objPC);
 		ptsPrkngMtr = new ParkingMeter(objPM);
 	}
 	
-	
-	/*
-	public ParkedCar getCarInfo()
-	{
-		return ???;
-	}
-	
-	public double getFine()
-	{
-		return ???;
-	}
-	
-	public PoliceOfficer getOfficerInfo()
-	{
-		return ???;
-	}
-	*/
+    
+    
+    public String toString()
+    {
+        // Create a DecimalFormat object for formatting.
+        //DecimalFormat dollar = new DecimalFormat("#,##0.00");
+        
+        // Build a state string.
+        String str = "Ticket data:\n" +
+                    "\nCar Data:\n" + ptsPrkdCr +
+                    "\nOfficer Data:\n" + ptsPolOff; //+
+                    //"\nMinutes Illegally Parked: " + minutes; //+
+                    //"\nFine: $" + dollar.format(fine);
+        
+        // Return the string.
+        return str;
+    }
 }
 
 
@@ -254,7 +267,9 @@ class PoliceOfficer
 		
 		if(polOffsParkedCar.minOnCar > polOffsParkingMeter.timePurchased)
 		{
-			expired = true;
+            double overtime = polOffsParkedCar.minOnCar - polOffsParkingMeter.timePurchased;
+            expired = true;
+            ParkingTicket theTicket = new ParkingTicket(polOffsParkedCar, polOffsParkingMeter);
 		}
 
 		return expired;
@@ -263,7 +278,7 @@ class PoliceOfficer
     public String toString()
 	{
 		String str = "Name: " + offName +
-        "\nBadgeNumber: " + badge;
+                    "\nBadgeNumber: " + badge;
 
         return str;
 	}
