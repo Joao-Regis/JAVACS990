@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+
 public class ParkingCarSimulator 
 {
 
@@ -14,7 +16,8 @@ public class ParkingCarSimulator
 		String lic;
 		int minOnCar;
 		int minPurchased;
-		
+		//double fineFirstHour = 25.0;
+		//double finePerHourAfter1stHour = 10.0;
 		
 		System.out.println("Enter the officer's name");
 		offName = keyboard.nextLine();
@@ -49,18 +52,16 @@ public class ParkingCarSimulator
 		
 		ParkingMeter theMeter = new ParkingMeter(minPurchased);
 					
-		PoliceOfficer copper = new PoliceOfficer(offName, badge, automobile, theMeter);
+		PoliceOfficer copper = new PoliceOfficer(offName, badge);
 				
-		//ParkingTicket fine = new ParkingTicket(copper, automobile, theMeter);
+		ParkingTicket fine = new ParkingTicket(automobile, theMeter);
 		
-        copper.checkExpiration(automobile, theMeter);
-        
-        if (minOnCar > minPurchased)
-            System.out.println(theTicket);
-        else
-            System.out.println("The car parking limits are valid");
-
-
+		if (fine != null)
+		{	System.out.println(ticket);}
+		else
+		{	System.out.println("The car parking minutes are valid")};
+		
+		//if(copper.checkExpiration(automobile, theMeter)
 		
 		keyboard.close();
 	}
@@ -70,6 +71,10 @@ public class ParkingCarSimulator
 }
 
 
+
+
+//**************************************************//
+//**************************************************//
 class ParkedCar
 {
 	String vehicleMake;
@@ -96,80 +101,71 @@ class ParkedCar
 		vehicleLic = copyOfCarObj.vehicleLic;
 		minOnCar = copyOfCarObj.minOnCar;
 	}
-    
-    
-    public void setVehMake(String aMake)
-   {
-      vehicleMake = aMake;
-   }
-
-
-   public void setVehModel(String aModel)
-   {
-      vehicleModel = aModel;
-   }
-
-
-   public void setVehColor(String aColor)
-   {
-      vehicleColor = aColor;
-   }
-
-
-   public void setVehLicNum(String aLicense)
-   {
-      vehicleLic = aLicense;
-   }
-
-
-   public void setVehMinOnCar(int aMinOnCar)
-   {
-      minOnCar= aMinOnCar;
-   }
-
-
-   public String getVehMake()
-   {
-      return vehicleMake;
-   }
-   
-   public String getVehModel()
-   {
-      return vehicleModel;
-   }
-
-   
-   public String getVehColor()
-   {
-      return vehicleColor;
-   }
-
-
-   public String getVehLicenseNumber()
-   {
-      return vehicleLic;
-   }
-
-
-   public int getVehMinOnCar()
-   {
-      return minOnCar;
-   }
-
-
+	
+	
+	public String getVehicleMake()
+	{
+		return vehicleMake;
+	}
+	
+	public String getVehicleModel() 
+	{
+		return vehicleModel;
+	}
+	
+	public String getVehicleColor() 
+	{
+		return vehicleColor;
+	}
+	
+	public String getVehicleLic()
+	{
+		return vehicleLic;
+	}
+	
+	
+	
+	/*
+	 * public void setVehicleMake() {
+	 * 
+	 * }
+	 * 
+	 * 
+	 * public void setVehicleModel() {
+	 * 
+	 * }
+	 * 
+	 * public void setVehicleColor() {
+	 * 
+	 * }
+	 * 
+	 * public void setVehicleLic() {
+	 * 
+	 * }
+	 */
+	
+	
 	public String toString()
 	{
 		String str = "Make: " + vehicleMake +
                 "\nModel: " + vehicleModel +
                 "\nColor: " + vehicleColor +
-                "\nLicense Number: " + vehicleLic +
-                "\nMinutes Parked: " + minOnCar;
+                "\nLiscense Number: " + vehicleLic; //[sic]
    
 		return str;
 	}
 }
 
+//**************************************************//
+//**************************************************//
 
+
+
+
+
+
+//**************************************************//
+//**************************************************//
 class ParkingMeter
 {
 	int timePurchased;
@@ -182,72 +178,25 @@ class ParkingMeter
 	ParkingMeter(ParkingMeter pmObjToBeCopied)
 	{
 		timePurchased = pmObjToBeCopied.timePurchased;
-    }
-    
-    public void setTimePurchased(int tPurchased)
-    {
-        timePurchased = tPurchased;
-    }
-
-    public int getTimePurchased()
-    {
-        return timePurchased;
-    }
-}
-
-
-class ParkingTicket
-{
-    
-    double fineFirstHour = 25.0;
-	double finePerHourAfter1stHour = 10.0;
-    
-    PoliceOfficer ptsPolOff;
-	ParkedCar ptsPrkdCr;
-    ParkingMeter ptsPrkngMtr;
-    
-
-
-	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
-	{
-		//ptsPolOff = new PoliceOfficer(objPO);
-		ptsPrkdCr = new ParkedCar(objPC);
-		ptsPrkngMtr = new ParkingMeter(objPM);
 	}
-	
-    
-    
-    public String toString()
-    {
-        // Create a DecimalFormat object for formatting.
-        //DecimalFormat dollar = new DecimalFormat("#,##0.00");
-        
-        // Build a state string.
-        String str = "Ticket data:\n" +
-                    "\nCar Data:\n" + ptsPrkdCr +
-                    "\nOfficer Data:\n" + ptsPolOff; //+
-                    //"\nMinutes Illegally Parked: " + minutes; //+
-                    //"\nFine: $" + dollar.format(fine);
-        
-        // Return the string.
-        return str;
-    }
 }
+//**************************************************//
+//**************************************************//
 
 
+
+//**************************************************//
+//**************************************************//
 class PoliceOfficer
 {
 	String offName;
 	int badge;
-	ParkedCar polOffsParkedCar;
-	ParkingMeter polOffsParkingMeter;
+
 	
-	PoliceOfficer(String anOffName, int aBadgeNum, ParkedCar inspParkedCar, ParkingMeter inspParkingMeter)
+	PoliceOfficer(String anOffName, int aBadgeNum)
 	{
 		offName = anOffName;
 		badge = aBadgeNum;
-		polOffsParkedCar = new ParkedCar(inspParkedCar);
-		polOffsParkingMeter = new ParkingMeter(inspParkingMeter);
 	}
 	
 	
@@ -255,32 +204,89 @@ class PoliceOfficer
 	{
 		offName = poObjToCopy.offName;
 		badge = poObjToCopy.badge;
-		polOffsParkedCar = new ParkedCar(poObjToCopy.polOffsParkedCar);
-		polOffsParkingMeter = new ParkingMeter(poObjToCopy.polOffsParkingMeter);
 	}
 	
 	
 	
-	public boolean checkExpiration(ParkedCar aCar, ParkingMeter aMeter)
+	
+	
+	
+	
+	public String toString()
 	{
-		boolean expired = false;
-		
-		if(polOffsParkedCar.minOnCar > polOffsParkingMeter.timePurchased)
-		{
-            double overtime = polOffsParkedCar.minOnCar - polOffsParkingMeter.timePurchased;
-            expired = true;
-            ParkingTicket theTicket = new ParkingTicket(polOffsParkedCar, polOffsParkingMeter);
-		}
-
-		return expired;
-    }
-    
-    public String toString()
-	{
-		String str = "Name: " + offName +
-                    "\nBadgeNumber: " + badge;
-
-        return str;
+		String str = "Officer Name: " + offName +
+                "\nBadge Number: " + badge;
+   
+		return str;
 	}
-
+	
+	
+	
 }
+//**************************************************//
+//**************************************************//
+
+
+
+
+
+
+
+//**************************************************//
+//**************************************************//
+class ParkingTicket
+{
+	String ptOffName;
+	int ptOffBadge;
+	PoliceOfficer ptsPolOff;
+	ParkedCar ptsPrkdCr;
+	ParkingMeter ptsPrkngMtr;
+	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
+	{
+		ptsPrkdCr = new ParkedCar(objPC);
+		ptsPrkngMtr = new ParkingMeter(objPM);
+	}
+	
+	ParkingTicket(String copperName, int copperBadge, ParkedCar objPC, ParkingMeter objPM)
+	{
+		ptOffName = copperName;
+		ptOffBadge = copperBadge;
+		ptsPrkdCr = new ParkedCar(objPC);
+		ptsPrkngMtr = new ParkingMeter(objPM);
+		
+		System.out.println("Car parking time has expired.");
+		System.out.println("Ticket data: ");
+		System.out.println(ptsPrkdCr);
+	}
+	
+	
+	/*
+	public ParkedCar getCarInfo()
+	{
+		return ???;
+	}
+	
+	public double getFine()
+	{
+		return ???;
+	}
+	
+	public PoliceOfficer getOfficerInfo()
+	{
+		return ???;
+	}
+	*/
+}
+//**************************************************//
+//**************************************************//
+
+
+
+
+
+
+
+
+
+
+
