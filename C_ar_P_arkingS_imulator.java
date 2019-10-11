@@ -14,10 +14,10 @@ public class ParkingCarSimulator
 		String model;
 		String color;
 		String lic;
-		int minOnCar;
-		int minPurchased;
-		//double fineFirstHour = 25.0;
-		//double finePerHourAfter1stHour = 10.0;
+		double minOnCar;
+		double minPurchased;
+		double fineFirstHour = 25.0;
+		double finePerHourAfter1stHour = 10.0;
 		
 		System.out.println("Enter the officer's name");
 		offName = keyboard.nextLine();
@@ -62,7 +62,8 @@ public class ParkingCarSimulator
 		//ParkingTicket fine = new ParkingTicket(automobile, theMeter);
 		
 		if (violationCheck = true)
-		{	fine.calFine(); 
+		{	ParkingTicket fine = new ParkingTicket(automobile, theMeter);
+			fine.calcFine(); 
 			System.out.println("ticket to to string");}
 		else
 		{	System.out.println("The car parking minutes are valid"); }
@@ -87,11 +88,11 @@ class ParkedCar
 	String vehicleModel;
 	String vehicleColor;
 	String vehicleLic;
-	int minOnCar;
+	double minOnCar;
 	
 	
 	ParkedCar(String aMake, String aModel, String aColor, 
-			String  aLic, int aTimeAmount)
+			String  aLic, double aTimeAmount)
 	{
 		vehicleMake = aMake;
 		vehicleModel = aModel;
@@ -174,9 +175,9 @@ class ParkedCar
 //**************************************************//
 class ParkingMeter
 {
-	int timePurchased;
+	double timePurchased;
 	
-	ParkingMeter(int timePaidFor)
+	ParkingMeter(double timePaidFor)
 	{
 		timePurchased = timePaidFor;
 	}
@@ -221,7 +222,7 @@ class PoliceOfficer
 		{	viol = false;}
 		
 		else if(pc.minOnCar < pm.timePurchased)
-		{	ParkingTicket fine = new ParkingTicket(pc, pm);
+		{	//ParkingTicket fine = new ParkingTicket(pc, pm);
 			viol = true;}
 		
 		return viol;
@@ -260,6 +261,11 @@ class ParkingTicket
 	ParkedCar ptsPrkdCr;
 	ParkingMeter ptsPrkngMtr;
 	
+	double fineFirstHour = 25.0;
+	double finePerHourAfter1stHour = 10.0;
+	double fineAmount;
+	
+	
 	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
 	{
 		ptsPrkdCr = new ParkedCar(objPC);
@@ -274,8 +280,21 @@ class ParkingTicket
 	
 	public void calcFine()
 	{
-		int overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
-		
+		double overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
+		if(overtime < 60.0)
+		{
+			fineAmount = fineFirstHour;
+		}
+		if(overtime > 60.0) 
+		{
+			double hours = overtime / 60.0;
+			int intHours = (int)hours; //truncates to result in just hours
+			
+			if((hours - intHours) > 0)
+			{	intHours = intHours + 1; }
+			
+			fineAmount = fineFirstHour + (intHours * finePerHourAfter1stHour );
+		}
 		
 	}
 	
