@@ -65,7 +65,7 @@ public class ParkingCarSimulator
 		if(fine != null)
 		{System.out.println(fine);}
 		else
-		{System.out.println("The car parking minutes are valid");
+		{System.out.println("The car parking minutes are valid");}
 		
 //		if (violationCheck == 2)
 //		{	System.out.println("The car parking minutes are valid"); }
@@ -332,7 +332,7 @@ class ParkingTicket
 	public void calcFine()
 	{
 		overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
-		int intHours;
+		int intHours = 0;
 		
 		if(overtime < 60.0)
 		{
@@ -380,7 +380,8 @@ class ParkingTicket
 
 }
 
-}
+
+
 //**************************************************//
 //**************************************************//
 
