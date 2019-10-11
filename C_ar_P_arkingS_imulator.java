@@ -256,7 +256,8 @@ class ParkingTicket
 	PoliceOfficer ptsPolOff;
 	ParkedCar ptsPrkdCr;
 	ParkingMeter ptsPrkngMtr;
-	ParkingTicket(ParkedCar objPC, ParkingMeter objPM, )
+	
+	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
 	{
 		ptsPrkdCr = new ParkedCar(objPC);
 		ptsPrkngMtr = new ParkingMeter(objPM);
