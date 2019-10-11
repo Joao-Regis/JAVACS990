@@ -16,8 +16,8 @@ public class ParkingCarSimulator
 		String lic;
 		double minOnCar;
 		double minPurchased;
-		double fineFirstHour = 25.0;
-		double finePerHourAfter1stHour = 10.0;
+		//double fineFirstHour = 25.0;
+		//double finePerHourAfter1stHour = 10.0;
 		
 		System.out.println("Enter the officer's name");
 		offName = keyboard.nextLine();
@@ -55,18 +55,29 @@ public class ParkingCarSimulator
 		PoliceOfficer copper = new PoliceOfficer(offName, badge);
 				
 		
-		boolean violationCheck;
-		violationCheck = copper.searching(automobile, theMeter);
+		//int violationCheck;
+		//violationCheck = copper.searching(automobile, theMeter);
 		
+		double overTimeMin = automobile.minOnCar - theMeter.timePurchased; 
 		
-		//ParkingTicket fine = new ParkingTicket(automobile, theMeter);
+		ParkingTicket fine = copper.searching(automobile, theMeter);
 		
-		if (violationCheck = true)
-		{	ParkingTicket fine = new ParkingTicket(automobile, theMeter);
-			fine.calcFine(); 
-			System.out.println("ticket to to string");}
+		if(fine != null)
+		{System.out.println(fine);}
 		else
-		{	System.out.println("The car parking minutes are valid"); }
+		{System.out.println("The car parking minutes are valid");
+		
+//		if (violationCheck == 2)
+//		{	System.out.println("The car parking minutes are valid"); }
+//		
+//		if (violationCheck == 4)
+//		{	ParkingTicket fine = new ParkingTicket(automobile, theMeter);
+//			fine.calcFine(); 
+//			System.out.println("Car parking time has expired");
+//			System.out.println("Ticket data:");
+//			//System.out.println(fine.toString());
+//		}
+		
 		
 		//if(copper.checkExpiration(automobile, theMeter)
 		
@@ -157,7 +168,7 @@ class ParkedCar
 		String str = "Make: " + vehicleMake +
                 "\nModel: " + vehicleModel +
                 "\nColor: " + vehicleColor +
-                "\nLiscense Number: " + vehicleLic; //[sic]
+                "\nLiscense Number: " + vehicleLic; 
    
 		return str;
 	}
@@ -214,18 +225,40 @@ class PoliceOfficer
 	}
 	
 	
-	public boolean searching(ParkedCar pc, ParkingMeter pm)
+	public ParkingTicket searching(ParkedCar pc, ParkingMeter pm)
 	{
-		boolean viol = false;
+
+		ParkingTicket fine = null;
 		
-		if(pc.minOnCar > pm.timePurchased)
-		{	viol = false;}
+		double overTimeMin = pc.minOnCar - pm.timePurchased;
 		
-		else if(pc.minOnCar < pm.timePurchased)
-		{	//ParkingTicket fine = new ParkingTicket(pc, pm);
-			viol = true;}
+		if(overTimeMin > 0)
+		{
+			fine = new ParkingTicket(pc, this , overTimeMin);
+		}
+		return fine;
 		
-		return viol;
+		
+		
+		
+		
+		
+		
+		//		int viol = 0;
+//		
+//		if(pc.minOnCar < pm.timePurchased)
+//		{	 viol = 2;
+//			 
+//		}
+//		
+//		else if(pc.minOnCar > pm.timePurchased)
+//		{	//ParkingTicket fine = new ParkingTicket(pc, pm);
+//			viol = 4;
+//			
+//
+//		}
+//		return viol;
+
 	}
 	
 	
@@ -261,6 +294,9 @@ class ParkingTicket
 	ParkedCar ptsPrkdCr;
 	ParkingMeter ptsPrkngMtr;
 	
+	double accTimeMin;
+	double overtime;
+	
 	double fineFirstHour = 25.0;
 	double finePerHourAfter1stHour = 10.0;
 	double fineAmount;
@@ -278,55 +314,67 @@ class ParkingTicket
 		
 	}
 	
+	
+	ParkingTicket(ParkedCar objPC, PoliceOfficer objPO, double minOver)
+	{
+			
+		ptsPrkdCr = new ParkedCar(objPC);
+		ptsPolOff = new PoliceOfficer(objPO);
+		overtime = minOver;
+		
+		
+		calcFine();
+	}
+	
+	
+	
+	
 	public void calcFine()
 	{
-		double overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
+		overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
+		
 		if(overtime < 60.0)
 		{
 			fineAmount = fineFirstHour;
 		}
+		
 		if(overtime > 60.0) 
 		{
 			double hours = overtime / 60.0;
 			int intHours = (int)hours; //truncates to result in just hours
 			
 			if((hours - intHours) > 0)
-			{	intHours = intHours + 1; }
+			{	
+				intHours = intHours + 1; 
+			}
+		}
 			
 			fineAmount = fineFirstHour + (intHours * finePerHourAfter1stHour );
-		}
+	}
+		
+		//System.out.println("Car parking time has expired");
+		//System.out.println("Ticket data:");
+		
 		
 	}
 	
-//	ParkingTicket(String copperName, int copperBadge, ParkedCar objPC, ParkingMeter objPM)
-//	{
-//		ptOffName = copperName;
-//		ptOffBadge = copperBadge;
-//		ptsPrkdCr = new ParkedCar(objPC);
-//		ptsPrkngMtr = new ParkingMeter(objPM);
-//		
-//		System.out.println("Car parking time has expired.");
-//		System.out.println("Ticket data: ");
-//		System.out.println(ptsPrkdCr);
-//	}
+	//public PoliceOfficer getPO()
+	//{
+	//	return new PoliceOfficer(ptsPolOff);
+	//}
 	
 	
-	/*
-	public ParkedCar getCarInfo()
+	public String toString()
 	{
-		return ???;
+		String str = "Car parking time has expired" +
+				"\nTicket data:" +
+				"\n" + ptsPrkdCr +
+                "\n" + fineAmount;
+   
+		return str;
 	}
 	
-	public double getFine()
-	{
-		return ???;
-	}
-	
-	public PoliceOfficer getOfficerInfo()
-	{
-		return ???;
-	}
-	*/
+
 }
 //**************************************************//
 //**************************************************//
