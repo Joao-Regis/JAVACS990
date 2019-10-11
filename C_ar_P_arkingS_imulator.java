@@ -62,7 +62,8 @@ public class ParkingCarSimulator
 		//ParkingTicket fine = new ParkingTicket(automobile, theMeter);
 		
 		if (violationCheck = true)
-		{	System.out.println("ticket to to string");}
+		{	fine.calFine(); 
+			System.out.println("ticket to to string");}
 		else
 		{	System.out.println("The car parking minutes are valid"); }
 		
@@ -217,11 +218,13 @@ class PoliceOfficer
 		boolean viol = false;
 		
 		if(pc.minOnCar > pm.timePurchased)
-		{	return false;}
+		{	viol = false;}
 		
 		else if(pc.minOnCar < pm.timePurchased)
 		{	ParkingTicket fine = new ParkingTicket(pc, pm);
-			return true;}
+			viol = true;}
+		
+		return viol;
 	}
 	
 	
@@ -263,17 +266,30 @@ class ParkingTicket
 		ptsPrkngMtr = new ParkingMeter(objPM);
 	}
 	
-	ParkingTicket(String copperName, int copperBadge, ParkedCar objPC, ParkingMeter objPM)
+	
+	ParkingTicket(ParkingTicket pt)
 	{
-		ptOffName = copperName;
-		ptOffBadge = copperBadge;
-		ptsPrkdCr = new ParkedCar(objPC);
-		ptsPrkngMtr = new ParkingMeter(objPM);
 		
-		System.out.println("Car parking time has expired.");
-		System.out.println("Ticket data: ");
-		System.out.println(ptsPrkdCr);
 	}
+	
+	public void calcFine()
+	{
+		int overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
+		
+		
+	}
+	
+//	ParkingTicket(String copperName, int copperBadge, ParkedCar objPC, ParkingMeter objPM)
+//	{
+//		ptOffName = copperName;
+//		ptOffBadge = copperBadge;
+//		ptsPrkdCr = new ParkedCar(objPC);
+//		ptsPrkngMtr = new ParkingMeter(objPM);
+//		
+//		System.out.println("Car parking time has expired.");
+//		System.out.println("Ticket data: ");
+//		System.out.println(ptsPrkdCr);
+//	}
 	
 	
 	/*
