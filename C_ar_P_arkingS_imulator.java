@@ -332,6 +332,7 @@ class ParkingTicket
 	public void calcFine()
 	{
 		overtime = ptsPrkdCr.minOnCar - ptsPrkngMtr.timePurchased;
+		int intHours;
 		
 		if(overtime < 60.0)
 		{
@@ -341,12 +342,14 @@ class ParkingTicket
 		if(overtime > 60.0) 
 		{
 			double hours = overtime / 60.0;
-			int intHours = (int)hours; //truncates to result in just hours
+			intHours = (int)hours; //truncates to result in just hours
 			
 			if((hours - intHours) > 0)
 			{	
 				intHours = intHours + 1; 
 			}
+			
+			//fineAmount = fineFirstHour + (intHours * finePerHourAfter1stHour );
 		}
 			
 			fineAmount = fineFirstHour + (intHours * finePerHourAfter1stHour );
@@ -356,7 +359,7 @@ class ParkingTicket
 		//System.out.println("Ticket data:");
 		
 		
-	}
+	
 	
 	//public PoliceOfficer getPO()
 	//{
@@ -374,6 +377,8 @@ class ParkingTicket
 		return str;
 	}
 	
+
+}
 
 }
 //**************************************************//
