@@ -54,12 +54,17 @@ public class ParkingCarSimulator
 					
 		PoliceOfficer copper = new PoliceOfficer(offName, badge);
 				
-		ParkingTicket fine = new ParkingTicket(automobile, theMeter);
 		
-		if (fine != null)
-		{	System.out.println(ticket);}
+		boolean violationCheck;
+		violationCheck = copper.searching(automobile, theMeter);
+		
+		
+		//ParkingTicket fine = new ParkingTicket(automobile, theMeter);
+		
+		if (violationCheck = true)
+		{	System.out.println("ticket to to string");}
 		else
-		{	System.out.println("The car parking minutes are valid")};
+		{	System.out.println("The car parking minutes are valid"); }
 		
 		//if(copper.checkExpiration(automobile, theMeter)
 		
@@ -207,7 +212,17 @@ class PoliceOfficer
 	}
 	
 	
-	
+	public boolean searching(ParkedCar pc, ParkingMeter pm)
+	{
+		boolean viol = false;
+		
+		if(pc.minOnCar > pm.timePurchased)
+		{	return false;}
+		
+		else if(pc.minOnCar < pm.timePurchased)
+		{	ParkingTicket fine = new ParkingTicket(pc, pm);
+			return true;}
+	}
 	
 	
 	
@@ -241,7 +256,7 @@ class ParkingTicket
 	PoliceOfficer ptsPolOff;
 	ParkedCar ptsPrkdCr;
 	ParkingMeter ptsPrkngMtr;
-	ParkingTicket(ParkedCar objPC, ParkingMeter objPM)
+	ParkingTicket(ParkedCar objPC, ParkingMeter objPM, )
 	{
 		ptsPrkdCr = new ParkedCar(objPC);
 		ptsPrkngMtr = new ParkingMeter(objPM);
