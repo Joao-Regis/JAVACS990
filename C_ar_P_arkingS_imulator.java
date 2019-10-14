@@ -44,7 +44,7 @@ import java.util.Scanner;
 		minOnCar = keyboard.nextInt();
 		while(minOnCar <= 0)
 		{
-			System.out.println("Invalid entry. Please try again");
+			System.out.println("Invalid Entry. Please try again.");
 			minOnCar = keyboard.nextInt();
 		}
 
@@ -53,7 +53,7 @@ import java.util.Scanner;
 		minPurchased = keyboard.nextInt();
 		while(minPurchased <= 0)
 		{
-			System.out.println("Invalid entry. Please try again");
+			System.out.println("Invalid Entry. Please try again.");
 			minPurchased = keyboard.nextInt();
 		}
 		
@@ -177,10 +177,10 @@ class ParkedCar
 	
 	public String toString()
 	{
-		String str = "Make: " + vehicleMake +
-                "\nModel: " + vehicleModel +
-                "\nColor: " + vehicleColor +
-                "\nLiscense Number: " + vehicleLic; 
+		String str = "Make: " + vehicleMake + "\n" +
+                "\nModel: " + vehicleModel + "\n" +
+                "\nColor: " + vehicleColor + "\n" +
+                "\nLiscense Number: " + vehicleLic + "\n"; 
    
 		return str;
 	}
@@ -276,8 +276,8 @@ class PoliceOfficer
 	
 	public String toString()
 	{
-		String str = "Officer Name: " + offName +
-                "\nBadge Number: " + badge;
+		String str = "Officer Name: " + offName + "\n" +
+                "\nBadge Number: " + badge + "\n";
    
 		return str;
 	}
@@ -384,8 +384,8 @@ class ParkingTicket
 	
 	public String toString()
 	{
-		String str = "Car parking time has expired" +
-				"\nTicket data:" +
+		String str = "Car parking time has expired. \n" +
+				"\nTicket data:\n" +
 				"\n" + ptsPrkdCr +
 				"\n" + ptsPolOff +
                 "\nFine: " + fineAmount;
