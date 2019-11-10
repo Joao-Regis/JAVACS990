@@ -1,7 +1,0 @@
-/**
- * StudentFileManager
- */
-public class StudentFileManager {
-
-    
-}
