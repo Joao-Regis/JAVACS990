@@ -3,26 +3,52 @@
  */
 public class Course 
 {
-    static int cid;
-    
-    String cname;
-    String instr;
-    String dept;
-    int cnum;
+    public static int courseCount = 0;
+    String cid;     // 20 chars = 40 bytes
+    String cname;   // 20 chars = 40 bytes
+    String instr;   // 20 chars = 40 bytes
+    String dept;    // 20 chars = 40 bytes
+    int cnum;       // 01 int = 04 bytes
 
-    public Course(String cna, String i, String d, int cnu) {
+    public Course(String cID,String cna, String i, String d) 
+    {
+        //increase courseCount by one. unique key value
+        //so that next course has unique cnum.
+        courseCount++;
+
+        this.cid = cID;
         this.cname = cna;
         this.instr = i;
         this.dept = d;
-        this.cnum = cnu;
+        this.cnum = courseCount;
     }
 
-    public static int getCid() {
+
+    public Course(String cID,String cna, String i, String d, int cno) 
+    {
+        this.cid = cID;
+        this.cname = cna;
+        this.instr = i;
+        this.dept = d;
+        this.cnum = cno;
+    }
+
+
+
+    public int getCourseCount()
+    {
+        return courseCount;
+    }
+
+
+    public String getCid() 
+    {
         return cid;
     }
 
-    public static void setCid(int cid) {
-        Course.cid = cid;
+    public void setCid(String cid) 
+    {
+        this.cid = cid;
     }
 
     public String getCname() {
@@ -60,7 +86,8 @@ public class Course
     @Override
     public String toString() 
     {
-        return "Course [cname=" + cname + ", cnum=" + cnum + ", dept=" + dept + ", instr=" + instr + "]";
+        return "Course [cname=" + cname + ", cnum=" + cnum + 
+                        ", dept=" + dept + ", instr=" + instr + "]";
     }
 
     
