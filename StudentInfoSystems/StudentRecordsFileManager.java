@@ -212,7 +212,7 @@ public class StudentRecordsFileManager
         String studentState = new String(charArray);
         
         // Trim any trailing spaces from the string.
-        studentCity.trim();
+        studentState.trim();
         
         
         
