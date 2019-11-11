@@ -36,22 +36,26 @@ public class StudentInformationSystem
                     System.out.println("Create new student");
                     student = collectStudentInfo();
                     System.out.println(student);
-                    file.writeStudent(student);
-                    //CreateStudentFile(student);
+                    file.getNumberOfRecords();
+                    //file.writeStudent(student);
+                    CreateStudentFile(student, file);
 
                     break;
 
                 case 4:
-                    displaySubMenu();
+                    System.out.println("Edit student");
+                    ModifyRecord(file);
                     break;
                 
                 case 7:
                     System.out.println("Display student");
-                    ReadstudentFile();
+                    ReadstudentFile(file);
                     break;
                 
                 case 10:
-
+                    file.close();
+                    
+                    System.out.println("Goodbye.");
                     break;
             }
 
@@ -90,7 +94,9 @@ public class StudentInformationSystem
             System.out.println("Invalid entry. Try again.");
             System.out.println("Please enter a valid choice(1-10, 0 to Quit)");
             selection = keyboard.nextInt();
+            //keyboard.nextLine();
         }
+        keyboard.nextLine();
         return selection;
     }
 
@@ -112,7 +118,8 @@ public class StudentInformationSystem
         String studentAddress;
         String studentCity;
         String studentState;
-        //Student aStudent;
+        
+        Student aStudent;
 
         System.out.println("\nEnter student's name.");
         studentName = keyboard.nextLine();
@@ -150,7 +157,7 @@ public class StudentInformationSystem
             studentState = keyboard.nextLine();
         }
 
-        Student aStudent = new Student(studentName, studentAddress, studentCity, studentState);
+        aStudent = new Student(studentName, studentAddress, studentCity, studentState);
         return aStudent;
     }
 
@@ -169,14 +176,15 @@ public class StudentInformationSystem
      * @throws IOException
      */
 
-    public static void CreateStudentFile(Student aStudent) throws IOException
+    public static void CreateStudentFile(Student aStudent, StudentRecordsFileManager aFile) throws IOException
     {
     
         //String studentName;    // 20 chars = 40 bytes
         //String studentAddress; // 20 chars = 40 bytes
         //String studentCity;    // 20 chars = 40 bytes
         //String studentState;   // 02 chars = 04 bytes -- Total 128 bytes
-        
+        StudentRecordsFileManager file = aFile;
+
         /* final int NUM_studentS = 5; // Number of students
         String name;      // student name
         int stid;         // stid on hand
@@ -212,12 +220,16 @@ public class StudentInformationSystem
         //Student student = new Student(studentName, studentAddress, studentCity, studentState);
         
        // Create an studentFile object.
-        StudentRecordsFileManager file = 
-            new StudentRecordsFileManager("Students.dat");
+        /* StudentRecordsFileManager file = 
+            new StudentRecordsFileManager("Students.dat"); */
     
         //StudentRecordsFileManager file;
+        //file.getNumberOfRecords();
 
-        //file.writeStudent(aStudent);
+        // move file pointer to eof to append new student.
+        file.moveFilePointer(file.getNumberOfRecords());
+
+        file.writeStudent(aStudent);
         
     
         // Close the file.
@@ -244,19 +256,21 @@ public class StudentInformationSystem
      * @throws IOException
      */
 
-    public static void ReadstudentFile() throws IOException
+    public static void ReadstudentFile(StudentRecordsFileManager aFile) throws IOException
     {
     
+        StudentRecordsFileManager file = aFile;
+        
         int recordNumber;     // Record number
         String again;         // To get a Y or an N
         Student student;   // An object from the file
         
         // Create a Scanner object for keyboard input.
-        Scanner keyboard = new Scanner(System.in);
+        //Scanner keyboard = new Scanner(System.in);
         
         // Open the file.
-        StudentRecordsFileManager
-        file = new StudentRecordsFileManager("Students.dat");
+        /* StudentRecordsFileManager
+        file = new StudentRecordsFileManager("Students.dat"); */
         
         // Report the number of records in the file.
         System.out.println("The Students.dat file has " +
@@ -267,7 +281,7 @@ public class StudentInformationSystem
         do
         {
             // Get the record number.
-            System.out.print("Enter the number of the record " +
+            System.out.print("Enter the id# of the student" +
                             "you wish to see: ");
             recordNumber = keyboard.nextInt();
             
@@ -275,7 +289,7 @@ public class StudentInformationSystem
             keyboard.nextLine();
             
             // Move the file pointer to that record.
-            file.moveFilePointer(recordNumber);
+            file.moveFilePointer(recordNumber - 1);
             
             // Read the record at that location.
             student = file.readStudent();
@@ -295,12 +309,21 @@ public class StudentInformationSystem
             System.out.print("\nDo you want to see another " +
                             "record? (Y/N): ");
             again = keyboard.nextLine();
+            
+            // Consume the remaining newline.
+            //keyboard.nextLine();
+
         } while (again.charAt(0) == 'Y' || again.charAt(0) == 'y');
         
-        // Close the file.
-        file.close();
+        // Consume the remaining newline.
+        //keyboard.nextLine();
 
-        keyboard.close();
+        // Close the file.
+        //file.close();
+
+        displayMenu();
+
+        //keyboard.close();
     }
 
 
@@ -312,8 +335,10 @@ public class StudentInformationSystem
     Students.dat file.
     */
 
-    public void ModifyRecord() throws IOException
+    public static void ModifyRecord(StudentRecordsFileManager aFile) throws IOException
     {
+        StudentRecordsFileManager file = aFile;
+        
         int recordNumber;   // Record number
         int stid;          // stid on hand
         String again;       // Want to change another one?
@@ -321,12 +346,13 @@ public class StudentInformationSystem
         String studentName; // student name
         Student student; // To reference an student
         
+
         // Create a Scanner object for keyboard input.
-        Scanner keyboard = new Scanner(System.in);
+        //Scanner keyboard = new Scanner(System.in);
         
         // Open the file.
-        StudentRecordsFileManager
-        file = new StudentRecordsFileManager("Students.dat");
+        /* StudentRecordsFileManager
+        file = new StudentRecordsFileManager("Students.dat"); */
         
         // Report the number of records in the file.
         System.out.println("The Students.dat file has " +
@@ -338,8 +364,8 @@ public class StudentInformationSystem
         do
         {
             // Get the record number.
-            System.out.print("Enter the number of the record " +
-                            "you wish to modify: ");
+            System.out.print("Enter the ID# of the student's " +
+                            "record you wish to modify: ");
             recordNumber = keyboard.nextInt();
             
             // Consume the remaining newline.
@@ -388,9 +414,12 @@ public class StudentInformationSystem
         } while (again.charAt(0) == 'Y' || again.charAt(0) == 'y');
         
         // Close the file.
-        file.close();
+        //file.close();
 
-        keyboard.close();
+        //keyboard.close();
+
+        displayMenu();
+
     }
 
 }
