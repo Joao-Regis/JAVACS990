@@ -8,7 +8,7 @@ Course records.
 */
 public class CourseRecordsFileManager
 {
-    public final int RECORD_SIZE = 128;
+    public final int RECORD_SIZE = 164;
     private RandomAccessFile courseFile; 
 
     /**
@@ -38,13 +38,33 @@ public class CourseRecordsFileManager
                                 throws IOException
     {
     
-        // Write the cnum to the file.
-        courseFile.writeInt(course.getCnum());
+        
+        // Get the course's CID.
+        String str = course.getCid();
+
+        // Write the CID.
+        if (str.length() > 20)
+        {
+            // If there are more than 20 characters in the
+            // string, then write only the first 2.
+            for (int i = 0; i < 20; i++)
+            courseFile.writeChar(str.charAt(i));
+        }
+        else
+        {
+            // Write the state to the file.
+            courseFile.writeChars(str);
+            // Write enough spaces to pad it out
+            // to 2 characters.
+            for (int i = 0; i < (20 - str.length()); i++)
+            courseFile.writeChar(' ');
+        }
+
 
         
     
         // Get the course's NAME.
-        String str = course.getCname();
+        str = course.getCname();
 
         // Write the name.
         if (str.length() > 20)
@@ -65,6 +85,8 @@ public class CourseRecordsFileManager
         }
 
 
+        
+        
         // Get the course's INSTRUCTOR.
         str = course.getInstr();
 
@@ -113,26 +135,13 @@ public class CourseRecordsFileManager
 
 
 
-        // Get the course's CID.
-        str = course.getCid();
+        
 
-        // Write the state.
-        if (str.length() > 2)
-        {
-            // If there are more than 2 characters in the
-            // string, then write only the first 2.
-            for (int i = 0; i < 2; i++)
-            courseFile.writeChar(str.charAt(i));
-        }
-        else
-        {
-            // Write the state to the file.
-            courseFile.writeChars(str);
-            // Write enough spaces to pad it out
-            // to 2 characters.
-            for (int i = 0; i < (2 - str.length()); i++)
-            courseFile.writeChar(' ');
-        }
+
+
+        // Write the cnum to the file.
+        courseFile.writeInt(course.getCnum());
+
 
 
         System.out.println("The data was written to the " +
@@ -153,8 +162,7 @@ public class CourseRecordsFileManager
 
     public Course readCourse() throws IOException
     {
-        // Read the stid from the file.
-        int courseNum = courseFile.readInt();
+        
         
 
         char[] charArray = new char[20];
@@ -218,10 +226,15 @@ public class CourseRecordsFileManager
         
         
         
+        // Read the cnum from the file.
+        int courseNum = courseFile.readInt();
+        
+        
+    
         // Create a Course object and initialize
         // it with these values.
         Course course =
-                new Course(courseNum, courseCID, courseName, courseInstr, courseDept);
+                new Course(courseCID, courseName, courseInstr, courseDept, courseNum);
         
         // Return the object.
         return course;
