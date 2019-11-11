@@ -1,7 +1,0 @@
-/**
- * CourseFileManager
- */
-public class CourseFileManager {
-
-    
-}
