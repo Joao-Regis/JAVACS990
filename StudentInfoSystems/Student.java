@@ -12,7 +12,7 @@ public class Student
 
     public Student( String n, String a, String c, String s) 
     {
-        //increase stid by one. unique key value
+        //increase studentCount by one. unique key value
         //so that next student has unique stid.
         studentCount++;
         
