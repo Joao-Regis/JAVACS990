@@ -8,7 +8,7 @@ public class Course
     String cname;   // 20 chars = 40 bytes
     String instr;   // 20 chars = 40 bytes
     String dept;    // 20 chars = 40 bytes
-    int cnum;       // 01 int = 04 bytes
+    int cnum;       // 01 int = 04 bytes -- Total 164 bytes
 
     public Course(String cID,String cna, String i, String d) 
     {
@@ -26,11 +26,11 @@ public class Course
 
     public Course(String cID,String cna, String i, String d, int cno) 
     {
+        this.cnum = cno;
         this.cid = cID;
         this.cname = cna;
         this.instr = i;
         this.dept = d;
-        this.cnum = cno;
     }
 
 
