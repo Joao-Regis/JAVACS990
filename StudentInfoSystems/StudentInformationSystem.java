@@ -30,7 +30,7 @@ public class StudentInformationSystem
         do
         {
             choice = displayMenu();
-            keyboard.nextLine();
+            //keyboard.nextLine();
             switch(choice)
             {   case 1:
                     System.out.println("Create new student");
@@ -65,7 +65,7 @@ public class StudentInformationSystem
 
         
     
-        keyboard.close();
+        //keyboard.close();
     }
 
 
@@ -340,11 +340,16 @@ public class StudentInformationSystem
         StudentRecordsFileManager file = aFile;
         
         int recordNumber;   // Record number
-        int stid;          // stid on hand
+        //int stid;          // stid on hand
         String again;       // Want to change another one?
         String sure;        // Is the user sure?
-        String studentName; // student name
+        //String studentName; // student name
         Student student; // To reference an student
+
+        String studentName;
+        String studentAddress;
+        String studentCity;
+        String studentState;
         
 
         // Create a Scanner object for keyboard input.
@@ -366,7 +371,7 @@ public class StudentInformationSystem
             // Get the record number.
             System.out.print("Enter the ID# of the student's " +
                             "record you wish to modify: ");
-            recordNumber = keyboard.nextInt();
+            recordNumber = (keyboard.nextInt()) - 1;
             
             // Consume the remaining newline.
             keyboard.nextLine();
@@ -379,20 +384,67 @@ public class StudentInformationSystem
             
             // Display the existing contents.
             System.out.println("Existing data:");
-            System.out.println("\nname: " +
+            // Display the record.
+            System.out.println("\nName: " +
                                 student.getName());
+            System.out.println("Address: " +
+                                student.getAddress());
+            System.out.println("City: " +
+                                student.getCity());
+            System.out.println("State: " +
+                                student.getState());
             System.out.println("stid: " + student.getStid());
             
             // Get the new data.
+
+
+            System.out.println("\nEnter student's name.");
+            studentName = keyboard.nextLine();
+            while(studentName == null || studentName.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter student's name.");
+                studentName = keyboard.nextLine();
+            }
+
+            System.out.println("\nEnter student's address.");
+            studentAddress = keyboard.nextLine();
+            while(studentAddress == null || studentAddress.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter student's address.");
+                studentAddress = keyboard.nextLine();
+            }
+
+            System.out.println("\nEnter student's city.");
+            studentCity = keyboard.nextLine();
+            while(studentCity == null || studentCity.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter student's city.");
+                studentCity = keyboard.nextLine();
+            }
+            
+            System.out.println("\nEnter student's state.");
+            studentState = keyboard.nextLine();
+            while(studentState == null || studentState.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter student's state.");
+                studentState = keyboard.nextLine();
+            }
+
+
+
             System.out.print("\nEnter the new name: ");
             studentName = keyboard.nextLine();
-            System.out.print("Enter the number of stid: ");
-            stid = keyboard.nextInt();
+            //System.out.print("Enter the number of stid: ");
+            //stid = keyboard.nextInt();
             keyboard.nextLine(); // Consume the remaining newline.
             
             // Store the new data in the object.
             student.setName(studentName);
-            student.setStid(stid);
+            //student.setStid(stid);
             
             // Make sure the user wants to save this data.
             System.out.print("Are you sure you want to save " +
