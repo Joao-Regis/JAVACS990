@@ -10,13 +10,13 @@ public class Enrollment
     String semester;    // 06 chars = 12 bytes
     char grade;         // 01 char = 02 bytes -- Total 52 bytes
 
-    public Enrollment(int eSID, int eCNum, int year, String semester, char grade) 
+    public Enrollment(int eSID, int eCNum, int yr, String sem, char grd) 
     {
         this.eSID = eSID;
         this.eCNum = eCNum;
-        this.year = year;
-        this.semester = semester;
-        this.grade = grade;
+        this.year = yr;
+        this.semester = sem;
+        this.grade = grd;
     }
 
 
