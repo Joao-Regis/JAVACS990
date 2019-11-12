@@ -132,17 +132,9 @@ public class CourseRecordsFileManager
             courseFile.writeChar(' ');
         }
 
-
-
-
         
-
-
-
         // Write the cnum to the file.
         courseFile.writeInt(course.getCnum());
-
-
 
         System.out.println("The data was written to the " +
                             "Courses.dat file.");
