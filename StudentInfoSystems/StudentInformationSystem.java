@@ -8,11 +8,7 @@ import java.util.Scanner;
 public class StudentInformationSystem
 {
     public static Scanner keyboard = new Scanner(System.in);
-    
-    //public final int RECORD_SIZE = 128;
-    //public RandomAccessFile studentFile;
 
-       
 
     public static void main(String[] args) throws IOException 
     {
@@ -31,6 +27,8 @@ public class StudentInformationSystem
 
         int choice;
         int subChoice;
+
+        int stdntID = 0;
 
 
         do
@@ -117,6 +115,8 @@ public class StudentInformationSystem
                         switch (subChoice)
                         {
                             case 1:
+                                stdntID = studentIdSelection();
+                                viewGradesByStudent(efile, stdntID);
                                 break;
                             case 2:
                                 break;
@@ -367,6 +367,64 @@ public class StudentInformationSystem
     }
 
 
+
+
+    public static int studentIdSelection()
+    {   
+        int sidSelected;
+
+        System.out.print("Enter the id# of the student's grades" +
+                            "you wish to see: ");
+        sidSelected = keyboard.nextInt();
+        return sidSelected;
+    }
+
+
+
+    public static void viewGradesByStudent(EnrollmentRecordsFileManager aFile, int stdntID) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        int stid = stdntID;
+        Enrollment enrollment;
+
+        for(int i = 0; i < file.getNumberOfRecords(); i++)
+        {
+            // Move the file pointer to that record.
+            file.moveFilePointer(i);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            if(enrollment.geteSID() == stid )
+            {
+                // Display the record.
+                System.out.println("Student ID: " + enrollment.geteSID());
+                System.out.println("CNum: " + enrollment.geteCNum());
+                System.out.println("Year: " + enrollment.getYear());
+                System.out.println("Semester: " + enrollment.getSemester());
+                System.out.println("Grade: " + enrollment.getGrade());
+                System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+            }
+        }
+    }
+
+
+
+
+    
+
+
+    /* public static void viewGradesByStudent(StudentRecordsFileManager aFile, int stid) {
+        StudentRecordsFileManager file = aFile;
+        try {
+            for (int i = 0; i < file.getNumberOfRecords(); i++) {
+
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    } */
 
 
 
@@ -1002,6 +1060,8 @@ public class StudentInformationSystem
                                 enrollment.getSemester());
             System.out.println("Grade: " +
                                 enrollment.getGrade());
+            System.out.println("Enrollment ID: " +
+                                enrollment.getEnrollmentID());
             
             
             // Ask the user whether to get another record.
@@ -1089,7 +1149,7 @@ public class StudentInformationSystem
             System.out.println("Year: " + enrollment.getYear());
             System.out.println("Semester: " + enrollment.getSemester());
             System.out.println("Grade: " + enrollment.getGrade());
-            
+            System.out.println("EnrollmentID: " + enrollment.getEnrollmentID());
             
             
             
@@ -1158,7 +1218,7 @@ public class StudentInformationSystem
             enrollment.setYear(eYear);
             enrollment.setSemester(eSemester);
             enrollment.setGrade(eGrade);
-            //student.setStid(stid);
+            
             
             // Make sure the user wants to save this data.
             System.out.print("Are you sure you want to save " +
