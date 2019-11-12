@@ -3,22 +3,39 @@
  */
 public class Enrollment 
 {
+    public static int enrollmentCount = 0;
+    int enrollmentID;   // 01 int = 04 bytes
+
     int eSID;           // 01 int = 04 bytes
     int eCNum;          // 01 int = 04 bytes
     int year;           // 01 int = 04 bytes
     String semester;    // 06 chars = 12 bytes
-    char grade;         // 01 char = 02 bytes -- Total 26 bytes
+    char grade;         // 01 char = 02 bytes -- Total 30 bytes
 
     public Enrollment(int eSID, int eCNum, int yr, String sem, char grd) 
+    {
+        //increase courseCount by one. unique key value
+        //so that next course has unique cnum.
+        enrollmentCount++;
+
+        this.eSID = eSID;
+        this.eCNum = eCNum;
+        this.year = yr;
+        this.semester = sem;
+        this.grade = grd;
+        this.enrollmentID = enrollmentCount;
+    }
+
+
+    public Enrollment(int eSID, int eCNum, int yr, String sem, char grd, int eID) 
     {
         this.eSID = eSID;
         this.eCNum = eCNum;
         this.year = yr;
         this.semester = sem;
         this.grade = grd;
+        this.enrollmentID = enrollmentCount;
     }
-
-
 
 
     public int getYear() 
@@ -77,6 +94,14 @@ public class Enrollment
         return "Enrollment [eCNum=" + eCNum + ", eSID=" + eSID 
             + ", grade=" + grade + ", semester=" + semester
             + ", year=" + year + "]";
+    }
+
+    public int getEnrollmentID() {
+        return enrollmentID;
+    }
+
+    public void setEnrollmentID(int enrollmentID) {
+        this.enrollmentID = enrollmentID;
     }
 
 }
