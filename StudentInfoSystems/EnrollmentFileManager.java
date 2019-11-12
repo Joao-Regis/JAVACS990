@@ -1,7 +1,0 @@
-/**
- * EnrollmentFileManager
- */
-public class EnrollmentFileManager {
-
-    
-}
