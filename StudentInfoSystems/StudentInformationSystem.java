@@ -26,10 +26,8 @@ public class StudentInformationSystem
         Enrollment enrollment;
 
         int choice;
-        int subChoice;
-
-        int stdntID = 0;
-
+        //int subChoice;
+    
 
         do
         {
@@ -109,20 +107,27 @@ public class StudentInformationSystem
 
 
                 case 10:
+                    int subChoice;
                     do
                     {
                         subChoice = displaySubMenu();
                         switch (subChoice)
                         {
                             case 1:
-                                stdntID = studentIdSelection();
-                                viewGradesByStudent(efile, stdntID);
+                                int stdntIDview = studentIdSelectionView();
+                                viewGradesByStudent(efile, stdntIDview);
                                 break;
                             case 2:
+                                //int crsNum = courseNumSelection();
+                                viewGradesByCourse(efile);
                                 break;
                             case 3:
+                                int stdntIDedit = studentIdSelectionEdit();
+                                ModifyEnrollmentGradeByStudent(efile, stdntIDedit);
                                 break;
                             case 4:
+                                int courseNum = courseNumSelection();
+                                ModifyEnrollmentGradeByStudent(efile, courseNum);
                                 break;
                             case 0:
                                 break;
@@ -369,7 +374,89 @@ public class StudentInformationSystem
 
 
 
-    public static int studentIdSelection()
+
+
+
+
+
+
+    public static int courseNumSelection()
+    {   
+        int cNumSelected;
+
+        System.out.print("Enter the course Number of the student's grades" +
+                            "you wish to edit: ");
+        cNumSelected = keyboard.nextInt();
+        return cNumSelected;
+    }
+
+    public static int courseYearSelection()
+    {   
+        int cYearSelected;
+
+        System.out.print("Enter the course year of the student's grades" +
+                            "you wish to see: ");
+        cYearSelected = keyboard.nextInt();
+        return cYearSelected;
+    }
+
+
+
+    public static void viewGradesByCourse(EnrollmentRecordsFileManager aFile) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        //int cNum = crsNum;
+        Enrollment enrollment;
+
+        int cNumSelected;
+        int cYearSelected;
+        String cSemSelected;
+
+        System.out.print("Enter the course Number of the grades " +
+                            "you wish to view: ");
+        cNumSelected = keyboard.nextInt();
+
+        for(int i = 0; i < file.getNumberOfRecords(); i++)
+        {
+            // Move the file pointer to that record.
+            file.moveFilePointer(i);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            if(enrollment.geteCNum() == cNumSelected)
+            {   
+                System.out.print("Enter the Year of courseNum " + cNumSelected +
+                            " you wish to see: ");
+                cYearSelected = keyboard.nextInt();
+                keyboard.nextLine();
+                
+                if(enrollment.getYear() == cYearSelected)
+                {
+                    System.out.print("Enter the Semester of courseNum " + cNumSelected +
+                            " in the year " + cYearSelected + " you wish to see: ");
+                    cSemSelected = keyboard.nextLine();
+                    
+                    if((enrollment.getSemester().trim()).equals(cSemSelected))
+                    {
+                        // Display the record.
+                        System.out.println("Student ID: " + enrollment.geteSID());
+                        System.out.println("CNum: " + enrollment.geteCNum());
+                        System.out.println("Year: " + enrollment.getYear());
+                        System.out.println("Semester: " + enrollment.getSemester());
+                        System.out.println("Grade: " + enrollment.getGrade());
+                        System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+                    }
+                }   
+            }
+        }
+    }
+
+
+
+
+
+    public static int studentIdSelectionView()
     {   
         int sidSelected;
 
@@ -379,6 +466,16 @@ public class StudentInformationSystem
         return sidSelected;
     }
 
+
+    public static int studentIdSelectionEdit()
+    {   
+        int sidSelected;
+
+        System.out.print("Enter the id# of the student's grades" +
+                            "you wish to edit: ");
+        sidSelected = keyboard.nextInt();
+        return sidSelected;
+    }
 
 
     public static void viewGradesByStudent(EnrollmentRecordsFileManager aFile, int stdntID) throws IOException
@@ -421,7 +518,7 @@ public class StudentInformationSystem
 
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            // auto generated catch block
             e.printStackTrace();
         }
     } */
@@ -1204,14 +1301,8 @@ public class StudentInformationSystem
                 System.out.println("Enter new grade.");
                 eGrade = keyboard.nextChar();
             } */
-
-
-            //System.out.print("\nEnter the new name: ");
-            //eSID = keyboard.nextLine();
-            //System.out.print("Enter the number of stid: ");
-            //stid = keyboard.nextInt();
-            //keyboard.nextLine(); // Consume the remaining newline.
             
+
             // Store the new data in the object.
             enrollment.seteSID(eSID);
             enrollment.seteCNum(eCNUM);
@@ -1238,15 +1329,191 @@ public class StudentInformationSystem
             again = keyboard.nextLine();
         
         } while (again.charAt(0) == 'Y' || again.charAt(0) == 'y');
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public static void ModifyEnrollmentGradeByStudent(EnrollmentRecordsFileManager aFile, int stdntID) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        int stid = stdntID;
         
-        // Close the file.
-        //file.close();
+        //int recordNumber;   // Record number
+        //String again;       // Want to change another one?
+        String sure;        // Is the user sure?
+        Enrollment enrollment; // To reference an enrollment
 
-        //keyboard.close();
+        char eGrade;
+        
+        // Report the number of records in the file.
+        System.out.println("The Enrollments.dat file has " +
+                    file.getNumberOfRecords() + " records.");
+        
 
-        //displayMenu();
+
+        for(int i = 0; i < file.getNumberOfRecords(); i++)
+        {
+            // Move the file pointer to that record.
+            file.moveFilePointer(i);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            if(enrollment.geteSID() == stid)
+            {
+                // Display the record.
+                System.out.println("Existing data:");
+                System.out.println("Student ID: " + enrollment.geteSID());
+                System.out.println("CNum: " + enrollment.geteCNum());
+                System.out.println("Year: " + enrollment.getYear());
+                System.out.println("Semester: " + enrollment.getSemester());
+                System.out.println("Grade: " + enrollment.getGrade());
+                System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+            
+                
+                // Get the new data.
+                System.out.println("\nEnter new grade.");
+                eGrade = keyboard.next().charAt(0);
+                keyboard.nextLine();
+                /* while(eGrade == null || eGrade.trim().isEmpty())
+                {
+                    System.out.println("Invalid entry. Try again.");
+                    System.out.println("Enter new grade.");
+                    eGrade = keyboard.nextChar();
+                } */
+
+
+                enrollment.setGrade(eGrade);
+                
+                
+                // Make sure the user wants to save this data.
+                System.out.print("Are you sure you want to save " +
+                                "this data? (Y/N) ");
+                sure = keyboard.nextLine();
+                if (sure.charAt(0) == 'Y' || sure.charAt(0) == 'y')
+                {
+                    // Move back to the record's starting position.
+                    file.moveFilePointer(i);
+                    // Save the new data.
+                    file.writeEnrollment(enrollment);
+
+                    // Display the record.
+                    System.out.println("Grade Updated to:");
+                    System.out.println("Student ID: " + enrollment.geteSID());
+                    System.out.println("CNum: " + enrollment.geteCNum());
+                    System.out.println("Year: " + enrollment.getYear());
+                    System.out.println("Semester: " + enrollment.getSemester());
+                    System.out.println("Grade: " + enrollment.getGrade());
+                    System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+                }
+            }
+        }
+        
 
     }
+
+
+
+
+
+
+    public static void ModifyEnrollmentGradeByCourse(EnrollmentRecordsFileManager aFile, int courseNum) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        int crsNum = courseNum ;
+        
+        //int recordNumber;   // Record number
+        //String again;       // Want to change another one?
+        String sure;        // Is the user sure?
+        Enrollment enrollment; // To reference an enrollment
+
+        char eGrade;
+        
+        // Report the number of records in the file.
+        System.out.println("The Enrollments.dat file has " +
+                    file.getNumberOfRecords() + " records.");
+        
+        
+        // Get a record number from the user and
+        // allow the user to modify it.
+        
+        // Get the record number.
+        /* System.out.print("Enter the student ID whose " +
+                    "enrollment grade record you wish to modify: "); */
+
+
+        for(int i = 0; i < file.getNumberOfRecords(); i++)
+        {
+            // Move the file pointer to that record.
+            file.moveFilePointer(i);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            if(enrollment.geteCNum() == crsNum)
+            {
+                // Display the record.
+                System.out.println("Existing data:");
+                System.out.println("Student ID: " + enrollment.geteSID());
+                System.out.println("CNum: " + enrollment.geteCNum());
+                System.out.println("Year: " + enrollment.getYear());
+                System.out.println("Semester: " + enrollment.getSemester());
+                System.out.println("Grade: " + enrollment.getGrade());
+                System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+            
+                
+                
+                // Get the new data.
+                System.out.println("\nEnter new grade.");
+                eGrade = keyboard.next().charAt(0);
+                keyboard.nextLine();
+                /* while(eGrade == null || eGrade.trim().isEmpty())
+                {
+                    System.out.println("Invalid entry. Try again.");
+                    System.out.println("Enter new grade.");
+                    eGrade = keyboard.nextChar();
+                } */
+
+
+                enrollment.setGrade(eGrade);
+                
+                
+                // Make sure the user wants to save this data.
+                System.out.print("Are you sure you want to save " +
+                                "this data? (Y/N) ");
+                sure = keyboard.nextLine();
+                if (sure.charAt(0) == 'Y' || sure.charAt(0) == 'y')
+                {
+                    // Move back to the record's starting position.
+                    file.moveFilePointer(i);
+                    // Save the new data.
+                    file.writeEnrollment(enrollment);
+
+                    // Display the record.
+                    System.out.println("Grade Updated to:");
+                    System.out.println("Student ID: " + enrollment.geteSID());
+                    System.out.println("CNum: " + enrollment.geteCNum());
+                    System.out.println("Year: " + enrollment.getYear());
+                    System.out.println("Semester: " + enrollment.getSemester());
+                    System.out.println("Grade: " + enrollment.getGrade());
+                    System.out.println("Enrollment ID: " + enrollment.getEnrollmentID());
+                }
+            }
+        }
+        
+
+    }
+
+
+
 
 
 
