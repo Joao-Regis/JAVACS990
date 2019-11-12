@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class EnrollmentRecordsFileManager 
 {
-    public final int RECORD_SIZE = 26;
+    public final int RECORD_SIZE = 30;
     private RandomAccessFile enrollmentFile; 
 
     /**
@@ -73,6 +73,10 @@ public class EnrollmentRecordsFileManager
         // Get the enrollment's GRADE.
         enrollmentFile.writeChar(enrollment.getGrade());
 
+
+        // Write the eSID to the file.
+        enrollmentFile.writeInt(enrollment.getEnrollmentID());
+
         
         System.out.println("The data was written to the " +
                             "Enrollments.dat file.");
@@ -120,11 +124,15 @@ public class EnrollmentRecordsFileManager
         // Read the YEAR from the file.
         char eGRADE = enrollmentFile.readChar();
 
+
+        // Read the cnum from the file.
+        int eID = enrollmentFile.readInt();
+
     
         // Create a Enrollment objects and initialize
         // it with these values.
         Enrollment enrollment =
-                new Enrollment(eSTID, eCNUM, eYEAR, eSEM, eGRADE);
+                new Enrollment(eSTID, eCNUM, eYEAR, eSEM, eGRADE, eID);
         
         // Return the object.
         return enrollment;
@@ -179,4 +187,3 @@ public class EnrollmentRecordsFileManager
         enrollmentFile.close();
     }
 }
-
