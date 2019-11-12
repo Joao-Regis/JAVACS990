@@ -10,7 +10,7 @@ public class Enrollment
     int eCNum;          // 01 int = 04 bytes
     int year;           // 01 int = 04 bytes
     String semester;    // 06 chars = 12 bytes
-    char grade;         // 01 char = 02 bytes -- Total 30 bytes
+    char grade = '*';   // 01 char = 02 bytes -- Total 30 bytes
 
     public Enrollment(int eSID, int eCNum, int yr, String sem, char grd) 
     {
@@ -34,7 +34,7 @@ public class Enrollment
         this.year = yr;
         this.semester = sem;
         this.grade = grd;
-        this.enrollmentID = enrollmentCount;
+        this.enrollmentID = eID;
     }
 
 
