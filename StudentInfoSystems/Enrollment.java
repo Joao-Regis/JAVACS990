@@ -3,12 +3,11 @@
  */
 public class Enrollment 
 {
-    int eSID;     // 01 int = 04 bytes
-    int eCNum;     // 01 int = 04 bytes
-    
+    int eSID;           // 01 int = 04 bytes
+    int eCNum;          // 01 int = 04 bytes
     int year;           // 01 int = 04 bytes
     String semester;    // 06 chars = 12 bytes
-    char grade;         // 01 char = 02 bytes -- Total 52 bytes
+    char grade;         // 01 char = 02 bytes -- Total 26 bytes
 
     public Enrollment(int eSID, int eCNum, int yr, String sem, char grd) 
     {
@@ -73,13 +72,11 @@ public class Enrollment
         this.eCNum = eCNum;
     }
 
-    
-
-	@Override
+    @Override
     public String toString() {
-        return "Enrollment [grade=" + grade + ", semester=" + 
-                            semester + ", year=" + year + "]";
-    }  
-
+        return "Enrollment [eCNum=" + eCNum + ", eSID=" + eSID 
+            + ", grade=" + grade + ", semester=" + semester
+            + ", year=" + year + "]";
+    }
 
 }
