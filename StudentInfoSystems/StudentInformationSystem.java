@@ -9,7 +9,7 @@ public class StudentInformationSystem
 {
     public static Scanner keyboard = new Scanner(System.in);
     
-    public final int RECORD_SIZE = 128;
+    //public final int RECORD_SIZE = 128;
     //public RandomAccessFile studentFile;
 
        
@@ -21,11 +21,16 @@ public class StudentInformationSystem
         
         CourseRecordsFileManager cfile = 
             new CourseRecordsFileManager("Courses.dat");
+        
+        EnrollmentRecordsFileManager efile = 
+            new EnrollmentRecordsFileManager("Enrollments.dat");
 
         Student student;
         Course course;
+        Enrollment enrollment;
 
         int choice;
+        int subChoice;
 
 
         do
@@ -52,6 +57,19 @@ public class StudentInformationSystem
                     CreateCourseFile(course, cfile);
 
                     break;
+                
+                case 3:
+                    System.out.println("Create new enrollment");
+                    enrollment = collectEnrollmentInfo();
+                    System.out.println(enrollment);
+                    efile.getNumberOfRecords();
+                    //file.writeStudent(student);
+                    CreateEnrollmentFile(enrollment, efile);
+
+                    break;
+                
+                
+                
                 case 4:
                     System.out.println("Edit student");
                     ModifyRecord(sfile);
@@ -60,6 +78,12 @@ public class StudentInformationSystem
                 case 5:
                     System.out.println("Edit course");
                     ModifyRecord(cfile);
+                    break;
+
+
+                case 6:
+                    System.out.println("Edit enrollment");
+                    ModifyRecord(efile);
                     break;
                 
                 case 7:
@@ -71,6 +95,12 @@ public class StudentInformationSystem
                     System.out.println("Display course");
                     ReadCourseFile(cfile);
                     break;
+
+
+                case 9:
+                    System.out.println("Display enrollment");
+                    ReadEnrollmentFile(efile);
+                    break;
                 
                 case 0:
                     sfile.close();
@@ -78,6 +108,28 @@ public class StudentInformationSystem
                     System.out.println("Goodbye.");
                     System.exit(0);
                     break;
+
+
+                case 10:
+                    do
+                    {
+                        subChoice = displaySubMenu();
+                        switch (subChoice)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 0:
+                                break;
+                        }        
+                    } while(subChoice != 0);
+
+                
             }
 
 
@@ -121,8 +173,10 @@ public class StudentInformationSystem
         return selection;
     }
 
-    public static void displaySubMenu()
+    public static int displaySubMenu()
     {
+        int subSelection;
+
         System.out.println("\nGrades Menu");
         System.out.println("1. View Grades by Student");
         System.out.println("2. View Grades by Course");
@@ -130,6 +184,17 @@ public class StudentInformationSystem
         System.out.println("4. Edit Grades by Course");
         System.out.println("0. --- Exit to Menu ---");
         System.out.println("Please enter a valid choice(1-4, 0 to Exit)");
+
+        subSelection = keyboard.nextInt();
+        while (subSelection < 0 || subSelection > 4)
+        {
+            System.out.println("Invalid entry. Try again.");
+            System.out.println("Please enter a valid choice(1-4, 0 to Quit)");
+            subSelection = keyboard.nextInt();
+            //keyboard.nextLine();
+        }
+        //keyboard.nextLine();
+        return subSelection;
 
     }
 
@@ -239,6 +304,74 @@ public class StudentInformationSystem
 
 
 
+    public static Enrollment collectEnrollmentInfo()
+    {
+        int eSID;
+        int eCNUM;
+        int eYear;
+        String eSemester;
+        char eGrade;
+        
+        Enrollment aEnrollment;
+
+        System.out.println("\nEnter student ID.");
+            eSID = keyboard.nextInt();
+            /* while(eSID == null || eSID.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new  Student ID.");
+                eSID = keyboard.nextInt();
+            } */
+
+            System.out.println("\nEnter course Num.");
+            eCNUM = keyboard.nextInt();
+            /* while(eCNUM == null || eCNUM.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new course Num.");
+                eCNUM = keyboard.nextInt();
+            } */
+
+            System.out.println("\nEnter year.");
+            eYear = keyboard.nextInt();
+            keyboard.nextLine();
+            /* while(eYear == null || eYear.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new year.");
+                eYear = keyboard.nextInt();
+            } */
+            
+            System.out.println("\nEnter semester.");
+            eSemester = keyboard.nextLine();
+            /* while(eSemester == null || eSemester.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new semester.");
+                eSemester = keyboard.nextLine();
+            } */
+
+
+
+            System.out.println("\nEnter new grade.");
+            eGrade = keyboard.next().charAt(0);
+            /* while(eGrade == null || eGrade.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new grade.");
+                eGrade = keyboard.nextChar();
+            } */
+
+        aEnrollment = new Enrollment(eSID, eCNUM, eYear, eSemester, eGrade);
+        return aEnrollment;
+    }
+
+
+
+
+
+
+
 
     /**
      * This program uses the studentFile class to create a file 
@@ -249,77 +382,20 @@ public class StudentInformationSystem
 
     public static void CreateStudentFile(Student aStudent, StudentRecordsFileManager aFile) throws IOException
     {
-    
-        //String studentName;    // 20 chars = 40 bytes
-        //String studentAddress; // 20 chars = 40 bytes
-        //String studentCity;    // 20 chars = 40 bytes
-        //String studentState;   // 02 chars = 04 bytes -- Total 128 bytes
         StudentRecordsFileManager file = aFile;
-
-        /* final int NUM_studentS = 5; // Number of students
-        String name;      // student name
-        int stid;         // stid on hand
-    
-        // Create a Scanner object for keyboard input.
-        Scanner keyboard = new Scanner(System.in);
-    
-        // Create an array to hold Student objects.
-        Student[] students = new Student[NUM_studentS];
-    
-        // Get data for the Student objects.
-        System.out.println("Enter data for " + NUM_studentS +
-                            " inventory students."); */
-        
-        //Scanner keyboard = new Scanner(System.in);
-        
-        //System.out.println("Enter student's name.");
-        //studentName = keyboard.nextLine();
-
-        //System.out.println("Enter student's address.");
-        //studentAddress = keyboard.nextLine();
-        
-        //System.out.println("Enter student's city.");
-        //studentCity = keyboard.nextLine();
-        
-        //System.out.println("Enter student's state.");
-        //studentState = keyboard.nextLine();
-        
-        // Consume the remaining newline.
-        //keyboard.nextLine();
-
-        // Create an Student object in the array.
-        //Student student = new Student(studentName, studentAddress, studentCity, studentState);
-        
-       // Create an studentFile object.
-        /* StudentRecordsFileManager file = 
-            new StudentRecordsFileManager("Students.dat"); */
-    
-        //StudentRecordsFileManager file;
-        //file.getNumberOfRecords();
 
         // move file pointer to eof to append new student.
         file.moveFilePointer(file.getNumberOfRecords());
 
         file.writeStudent(aStudent);
-        
-    
-        // Close the file.
-        //file.close();
     
         System.out.println("The data was written to the " +
                             "Students.dat file.");
-
-        //keyboard.close();
         
     }
     
-    /* public static void writeStudent(Student aStudent)
-    {
-        file.writeStudent(aStudent);
-        System.out.println("The data was written to the " +
-                            "Students.dat file.");
-    } */
-
+    
+ 
 
     /**
      * This program displays specified records from the Students.dat file.
@@ -576,70 +652,20 @@ public class StudentInformationSystem
 
     public static void CreateCourseFile(Course aCourse, CourseRecordsFileManager aFile) throws IOException
     {
-    
-        //String courseCID;    // 20 chars = 40 bytes
-        //String courseName; // 20 chars = 40 bytes
-        //String courseInstr;    // 20 chars = 40 bytes
-        //String courseDept;   // 02 chars = 04 bytes -- Total 128 bytes
         CourseRecordsFileManager file = aFile;
-
-        /* final int NUM_studentS = 5; // Number of students
-        String name;      // student name
-        int stid;         // stid on hand
-    
-        // Create a Scanner object for keyboard input.
-        Scanner keyboard = new Scanner(System.in);
-    
-        // Create an array to hold Student objects.
-        Student[] students = new Student[NUM_studentS];
-    
-        // Get data for the Student objects.
-        System.out.println("Enter data for " + NUM_studentS +
-                            " inventory students."); */
         
-        //Scanner keyboard = new Scanner(System.in);
-        
-        //System.out.println("Enter student's name.");
-        //courseCID = keyboard.nextLine();
-
-        //System.out.println("Enter student's address.");
-        //courseName = keyboard.nextLine();
-        
-        //System.out.println("Enter student's city.");
-        //courseInstr = keyboard.nextLine();
-        
-        //System.out.println("Enter student's state.");
-        //courseDept = keyboard.nextLine();
-        
-        // Consume the remaining newline.
-        //keyboard.nextLine();
-
-        // Create an Student object in the array.
-        //Student student = new Student(courseCID, courseName, courseInstr, courseDept);
-        
-       // Create an courseFile object.
-        /* CourseRecordsFileManager file = 
-            new CourseRecordsFileManager("Students.dat"); */
-    
-        //CourseRecordsFileManager file;
-        //file.getNumberOfRecords();
-
-        // move file pointer to eof to append new course.
         file.moveFilePointer(file.getNumberOfRecords());
 
         file.writeCourse(aCourse);
-        
-    
-        // Close the file.
-        //file.close();
-    
+
         System.out.println("The data was written to the " +
                             "Courses.dat file.");
-
-        //keyboard.close();
-        
     }
     
+
+
+
+
     /* public static void writeCourse(Student aCourse)
     {
         file.writeCourse(aCourse);
@@ -885,6 +911,282 @@ public class StudentInformationSystem
 
 
 
+
+
+
+
+
+
+
+    /**
+     * This program uses the enrollmentFile class to create a file 
+     * containing data from 5 Enrollment objectss.
+     * 
+     * @throws IOException
+     */
+
+    public static void CreateEnrollmentFile(Enrollment aEnrollment, EnrollmentRecordsFileManager aFile) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        
+        // move file pointer to eof to append new enrollment.
+        file.moveFilePointer(file.getNumberOfRecords());
+
+        file.writeEnrollment(aEnrollment);
+        
+        System.out.println("The data was written to the " +
+                            "Enrollments.dat file.");
+    }
+    
+
+
+    /* public static void writeEnrollment(Student aEnrollment)
+    {
+        file.writeEnrollment(aEnrollment);
+        System.out.println("The data was written to the " +
+                            "Students.dat file.");
+    } */
+
+
+    /**
+     * This program displays specified records from the Enrollments.dat file.
+     * 
+     * @throws IOException
+     */
+
+    public static void ReadEnrollmentFile(EnrollmentRecordsFileManager aFile) throws IOException
+    {
+    
+        EnrollmentRecordsFileManager file = aFile;
+        
+        int recordNumber;     // Record number
+        String again;         // To get a Y or an N
+        Enrollment enrollment;   // An object from the file
+        
+        // Create a Scanner object for keyboard input.
+        //Scanner keyboard = new Scanner(System.in);
+        
+        // Open the file.
+        /* EnrollmentRecordsFileManager
+        file = new EnrollmentRecordsFileManager("Enrollments.dat"); */
+        
+        // Report the number of records in the file.
+        System.out.println("The Enrollments.dat file has " +
+                    file.getNumberOfRecords() + " records.");
+        
+        // Get a record number from the user and
+        // display the record.
+        do
+        {
+            // Get the record number.
+            System.out.print("Enter a student id to view " +
+                            "enrollment record: ");
+            recordNumber = keyboard.nextInt();
+            
+            // Consume the remaining newline.
+            keyboard.nextLine();
+            
+            // Move the file pointer to that record.
+            file.moveFilePointer(recordNumber - 1);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            // Display the record.
+            System.out.println("Student ID: " +
+                                enrollment.geteSID());
+            System.out.println("CNum: " + enrollment.geteCNum());
+            System.out.println("Year: " +
+                                enrollment.getYear());
+            System.out.println("Semester: " +
+                                enrollment.getSemester());
+            System.out.println("Grade: " +
+                                enrollment.getGrade());
+            
+            
+            // Ask the user whether to get another record.
+            System.out.print("\nDo you want to see another " +
+                            "enrollment record? (Y/N): ");
+            again = keyboard.nextLine();
+            
+            // Consume the remaining newline.
+            //keyboard.nextLine();
+
+        } while (again.charAt(0) == 'Y' || again.charAt(0) == 'y');
+        
+        // Consume the remaining newline.
+        //keyboard.nextLine();
+
+        // Close the file.
+        //file.close();
+
+        //displayMenu();
+
+        //keyboard.close();
+    }
+
+
+
+
+
+    /*
+    This program allows the user to modify records in the
+    Enrollments.dat file.
+    */
+
+    public static void ModifyRecord(EnrollmentRecordsFileManager aFile) throws IOException
+    {
+        EnrollmentRecordsFileManager file = aFile;
+        
+        int recordNumber;   // Record number
+        //int stid;          // stid on hand
+        String again;       // Want to change another one?
+        String sure;        // Is the user sure?
+        //String eSID; // student name
+        Enrollment enrollment; // To reference an enrollment
+
+        int eSID;
+        int eCNUM;
+        int eYear;
+        String eSemester;
+        char eGrade;
+
+        // Create a Scanner object for keyboard input.
+        //Scanner keyboard = new Scanner(System.in);
+        
+        // Open the file.
+        /* EnrollmentRecordsFileManager
+        file = new EnrollmentRecordsFileManager("Students.dat"); */
+        
+        // Report the number of records in the file.
+        System.out.println("The Enrollments.dat file has " +
+                    file.getNumberOfRecords() + " records.");
+        
+        
+        // Get a record number from the user and
+        // allow the user to modify it.
+        do
+        {
+            // Get the record number.
+            System.out.print("Enter the student ID whose " +
+                        "enrollment record you wish to modify: ");
+            recordNumber = (keyboard.nextInt()) - 1;
+            
+            // Consume the remaining newline.
+            keyboard.nextLine();
+            
+            // Move the file pointer to that record number.
+            file.moveFilePointer(recordNumber);
+            
+            // Read the record at that location.
+            enrollment = file.readEnrollment();
+            
+            // Display the existing contents.
+            System.out.println("Existing data:");
+            // Display the record.
+            System.out.println("\nSID: " + enrollment.geteSID());
+            System.out.println("Cnum: " + enrollment.geteCNum());
+            System.out.println("Year: " + enrollment.getYear());
+            System.out.println("Semester: " + enrollment.getSemester());
+            System.out.println("Grade: " + enrollment.getGrade());
+            
+            
+            
+            
+            // Get the new data.
+
+
+            System.out.println("\nEnter new student ID.");
+            eSID = keyboard.nextInt();
+            /* while(eSID == null || eSID.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new  Student ID.");
+                eSID = keyboard.nextInt();
+            } */
+
+            System.out.println("\nEnter new course Num.");
+            eCNUM = keyboard.nextInt();
+            /* while(eCNUM == null || eCNUM.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new course Num.");
+                eCNUM = keyboard.nextInt();
+            } */
+
+            System.out.println("\nEnter new year.");
+            eYear = keyboard.nextInt();
+            keyboard.nextLine();
+            /* while(eYear == null || eYear.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new year.");
+                eYear = keyboard.nextInt();
+            } */
+            
+            System.out.println("\nEnter new semester.");
+            eSemester = keyboard.nextLine();
+            /* while(eSemester == null || eSemester.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new semester.");
+                eSemester = keyboard.nextLine();
+            } */
+
+
+
+            System.out.println("\nEnter new grade.");
+            eGrade = keyboard.next().charAt(0);
+            keyboard.nextLine();
+            /* while(eGrade == null || eGrade.trim().isEmpty())
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new grade.");
+                eGrade = keyboard.nextChar();
+            } */
+
+
+            //System.out.print("\nEnter the new name: ");
+            //eSID = keyboard.nextLine();
+            //System.out.print("Enter the number of stid: ");
+            //stid = keyboard.nextInt();
+            //keyboard.nextLine(); // Consume the remaining newline.
+            
+            // Store the new data in the object.
+            enrollment.seteSID(eSID);
+            enrollment.seteCNum(eCNUM);
+            enrollment.setYear(eYear);
+            enrollment.setSemester(eSemester);
+            enrollment.setGrade(eGrade);
+            //student.setStid(stid);
+            
+            // Make sure the user wants to save this data.
+            System.out.print("Are you sure you want to save " +
+                            "this data? (Y/N) ");
+            sure = keyboard.nextLine();
+            if (sure.charAt(0) == 'Y' || sure.charAt(0) == 'y')
+            {
+                // Move back to the record's starting position.
+                file.moveFilePointer(recordNumber);
+                // Save the new data.
+                file.writeEnrollment(enrollment);
+            }
+            
+            // Ask the user whether to change another record.
+            System.out.print("\nDo you want to modify another " +
+                            "record? (Y/N): ");
+            again = keyboard.nextLine();
+        
+        } while (again.charAt(0) == 'Y' || again.charAt(0) == 'y');
+        
+        // Close the file.
+        //file.close();
+
+        //keyboard.close();
+
+        //displayMenu();
+
+    }
 
 
 
