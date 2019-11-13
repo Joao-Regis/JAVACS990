@@ -56,7 +56,7 @@ public class StudentInformationSystem
                 
                 case 3:
                     System.out.println("Create new enrollment");
-                    enrollment = collectEnrollmentInfo();
+                    enrollment = collectEnrollmentInfo(sfile, cfile);
                     System.out.println(enrollment);
                     efile.getNumberOfRecords();
                     //file.writeStudent(student);
@@ -305,11 +305,29 @@ public class StudentInformationSystem
 
 
 
+public static int validateStudent(StudentRecordsFileManager stdFile, int stdntNoSelected) throws IOException
+{
+    StudentRecordsFileManager sFile = stdFile;
+    int eSID = stdntNoSelected;
+    long snum = sFile.getNumberOfRecords();
+    int numOfStudentRecords = (int)snum;
+
+    while(eSID < 0 || eSID > numOfStudentRecords)
+            {
+                System.out.println("\nCurrent num of students " +  
+                                    numOfStudentRecords);
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("Enter new  Student ID.");
+                eSID = keyboard.nextInt();
+            }
+
+    return eSID;
+}
 
 
 
-
-    public static Enrollment collectEnrollmentInfo()
+    public static Enrollment collectEnrollmentInfo(StudentRecordsFileManager stdFile, CourseRecordsFileManager crsFile)
+            throws IOException
     {
         int eSID;
         int eCNUM;
@@ -317,54 +335,97 @@ public class StudentInformationSystem
         String eSemester;
         char eGrade;
         
+        StudentRecordsFileManager sFile = stdFile;
+        CourseRecordsFileManager cFile = crsFile;
         Enrollment aEnrollment;
 
-        System.out.println("\nEnter student ID.");
+        long snum = sFile.getNumberOfRecords();
+        int numOfStudentRecords = (int)snum;
+
+        long cnum = cFile.getNumberOfRecords();
+        int numOfCourseRecords = (int)cnum;
+
+
+        
+
+        System.out.println("\nCurrent num of students " +  
+                                numOfStudentRecords);
+        System.out.println("Enter student ID.");
+        
             eSID = keyboard.nextInt();
-            /* while(eSID == null || eSID.trim().isEmpty())
+            while(eSID < 0 || eSID > numOfStudentRecords)
             {
+                System.out.println("\nCurrent num of students " +  
+                                    numOfStudentRecords);
                 System.out.println("Invalid entry. Try again.");
                 System.out.println("Enter new  Student ID.");
                 eSID = keyboard.nextInt();
-            } */
+            }
 
-            System.out.println("\nEnter course Num.");
+            System.out.println("\nCurrent num of courses " +  
+                                numOfCourseRecords);
+            System.out.println("Enter course Num.");
             eCNUM = keyboard.nextInt();
-            /* while(eCNUM == null || eCNUM.trim().isEmpty())
+            while(eCNUM < 0 || eCNUM > numOfCourseRecords)
             {
                 System.out.println("Invalid entry. Try again.");
+                System.out.println("\nCurrent num of courses " +  
+                                        numOfCourseRecords);
                 System.out.println("Enter new course Num.");
                 eCNUM = keyboard.nextInt();
-            } */
+            }
 
-            System.out.println("\nEnter year.");
+            System.out.println("\nOnly 2015 - 2020 allowed"); 
+            System.out.println("Enter year.");
             eYear = keyboard.nextInt();
             keyboard.nextLine();
-            /* while(eYear == null || eYear.trim().isEmpty())
+            //int yrLength = String.valueOf(eYear).length();
+            while(eYear < 2015 || eYear > 2020)
+            {
+                System.out.println("Invalid entry. Try again.");
+                System.out.println("\nOnly 2015 - 2020 allowed");
+                System.out.println("Enter new year.");
+                eYear = keyboard.nextInt();
+                keyboard.nextLine();
+            }
+            
+            
+            /* while(yrLength < 0 || yrLength > 4 || eYear < 0)
             {
                 System.out.println("Invalid entry. Try again.");
                 System.out.println("Enter new year.");
                 eYear = keyboard.nextInt();
             } */
             
-            System.out.println("\nEnter semester.");
+
+            System.out.println("\nSemester options: Winter, Spring, Summer, Fall");
+            System.out.println("Enter semester.");
+            
             eSemester = keyboard.nextLine();
-            /* while(eSemester == null || eSemester.trim().isEmpty())
+            /* while(eSemester.trim().isEmpty() ||
+                    (!eSemester.equals("Winter")) || (!eSemester.equals("winter")) || 
+                    (!eSemester.equals("Spring")) || (!eSemester.equals("spring")) || 
+                    (!eSemester.equals("Summer")) || (!eSemester.equals("summer")) || 
+                    (!eSemester.equals("Fall")) || (!eSemester.equals("fall"))  )
             {
                 System.out.println("Invalid entry. Try again.");
-                System.out.println("Enter new semester.");
+                System.out.println("Enter Winter, Spring, Summer or Fall");
                 eSemester = keyboard.nextLine();
             } */
 
 
-
-            System.out.println("\nEnter new grade.");
+            System.out.println("\nGrade options: A, B, C, D or F");
+            System.out.println("Enter new grade.");
             eGrade = keyboard.next().charAt(0);
-            /* while(eGrade == null || eGrade.trim().isEmpty())
+            /* while(eGrade != 'A' || eGrade != 'a' ||
+                    eGrade != 'B' || eGrade != 'b' ||
+                    eGrade != 'C' || eGrade != 'c' ||
+                    eGrade != 'D' || eGrade != 'd' ||
+                    eGrade != 'F' || eGrade != 'f' )
             {
                 System.out.println("Invalid entry. Try again.");
                 System.out.println("Enter new grade.");
-                eGrade = keyboard.nextChar();
+                eGrade = keyboard.next().charAt(0);
             } */
 
         aEnrollment = new Enrollment(eSID, eCNUM, eYear, eSemester, eGrade);
