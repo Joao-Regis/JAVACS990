@@ -4,9 +4,11 @@ import java.util.StringTokenizer;
 /**
  * SalesAnalysisDemo
  */
-public class SalesAnalysisDemo {
+public class SalesAnalysisDemo 
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         
     }
 }
