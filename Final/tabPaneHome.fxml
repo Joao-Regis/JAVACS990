@@ -122,11 +122,11 @@
                         <TextField fx:id="txtFldCourseName" GridPane.columnIndex="1" />
                         <TextField fx:id="txtFldCourseInstructor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="txtFldCourseDept" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtFldCourseNumber" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtFldCourseID" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Course Name (Required)" />
                         <Label text="Instructor (Required)" GridPane.rowIndex="1" />
                         <Label text="Department (Required)" GridPane.rowIndex="2" />
-                        <Label text="Course Number (Required)" GridPane.rowIndex="3" />
+                        <Label text="Course ID (Required)" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
@@ -151,15 +151,15 @@
                      </rowConstraints>
                      <children>
                         <Button fx:id="btnEditCourse" mnemonicParsing="false" onMouseClicked="#handleBtnClick" text="Edit Course" GridPane.rowIndex="5" />
-                        <Button fx:id="btnResetAddCourseFields1" mnemonicParsing="false" onMouseClicked="#handleBtnClick" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="btnResetAddCourseFields" mnemonicParsing="false" onMouseClicked="#handleBtnClick" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField fx:id="txtFldCourseNameSearchResult" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="txtFldCourseInstructorSearchResult" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="txtFldCourseDeptSearchResult" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="txtFldCourseNumberSearchResult" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Course Name (Required)" GridPane.rowIndex="1" />
-                        <Label text="Instructor (Required)" GridPane.rowIndex="2" />
-                        <Label text="Department (Required)" GridPane.rowIndex="3" />
-                        <Label text="Course Number (Required)" GridPane.rowIndex="4" />
+                        <Label text="Course Name" GridPane.rowIndex="1" />
+                        <Label text="Instructor" GridPane.rowIndex="2" />
+                        <Label text="Department" GridPane.rowIndex="3" />
+                        <Label text="Course Number" GridPane.rowIndex="4" />
                         <Label text="Course ID" />
                         <TextField fx:id="txtFldCourseIDSearchResult" GridPane.columnIndex="1" />
                      </children>
@@ -175,7 +175,7 @@
                      </rowConstraints>
                      <children>
                         <Label text="Enter Course ID" />
-                        <Button fx:id="btnCourseSearch" mnemonicParsing="false" onMouseClicked="#handleBtnClick" prefHeight="30.0" prefWidth="173.0" text="Search Student" GridPane.columnIndex="2" />
+                        <Button fx:id="btnCourseSearch" mnemonicParsing="false" onMouseClicked="#handleBtnClick" prefHeight="30.0" prefWidth="173.0" text="Search Course" GridPane.columnIndex="2" />
                         <TextField fx:id="txtFldStudentSearch1" GridPane.columnIndex="1" />
                         <TextField fx:id="txtFldCourseToSearchFor" GridPane.columnIndex="1" />
                      </children>
@@ -187,7 +187,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <GridPane layoutX="73.0" layoutY="99.0" prefHeight="150.0" prefWidth="482.0">
+                  <GridPane layoutX="73.0" layoutY="99.0" prefHeight="150.0" prefWidth="585.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -200,16 +200,16 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="btnAddCreateEnrollment" mnemonicParsing="false" text="Add" GridPane.rowIndex="4" />
+                        <Button fx:id="btnAddCreateEnrollment" mnemonicParsing="false" onMouseClicked="#handleBtnClick" text="Add" GridPane.rowIndex="4" />
                         <Button fx:id="btnResetEnrollmentFields" mnemonicParsing="false" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField GridPane.columnIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Student ID" />
-                        <Label text="Course ID" GridPane.rowIndex="1" />
-                        <Label text="Year" GridPane.rowIndex="2" />
-                        <Label text="Semester" GridPane.rowIndex="3" />
+                        <TextField fx:id="enrollmentStudentIDCreate" GridPane.columnIndex="1" />
+                        <TextField fx:id="enrollmentCourseNumCreate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Student ID (Required)" />
+                        <Label text="Course Num (Required)" GridPane.rowIndex="1" />
+                        <Label text="Year (from 2018 onward only) (Required)" GridPane.rowIndex="2" />
+                        <Label text="Semester (Spring, Summer, Winter or Fall) (Req)" GridPane.rowIndex="3" />
+                        <ChoiceBox fx:id="ChoiceBoxEnrollmentSemester" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ChoiceBox fx:id="ChoiceBoxEnrollmentYear" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
