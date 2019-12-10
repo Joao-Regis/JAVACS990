@@ -11,6 +11,7 @@ public class StudentRecordsFileManager
     public final int RECORD_SIZE = 128;
     private RandomAccessFile studentFile; 
 
+
     /**
      The constructor opens a random access file
     for both reading and writing.
@@ -28,29 +29,13 @@ public class StudentRecordsFileManager
 
 
 
-
-
-
-
-
     public void CreateStudentFile(Student aStudent) throws IOException
     {
         // move file pointer to eof to append new student.
         moveFilePointer(getNumberOfRecords());
 
         writeStudent(aStudent);
-
-        System.out.println("The data was written to the " +
-                "Students.dat file.");
     }
-
-
-
-
-
-
-
-
 
 
     /**
@@ -168,20 +153,14 @@ public class StudentRecordsFileManager
 
 
 
-
-
-
     public Student ReadstudentFile(int studentNumID) throws IOException
     {
-
         int recordNumber = studentNumID;     // Record number
         Student student;   // An object from the file
-
 
         // Report the number of records in the file.
         System.out.println("The Students.dat file has " +
                 getNumberOfRecords() + " records.");
-
 
         // Move the file pointer to that record.
         moveFilePointer(recordNumber - 1);
@@ -203,13 +182,6 @@ public class StudentRecordsFileManager
         return student;
 
     }
-
-
-
-
-
-
-
 
 
 
