@@ -1,4 +1,7 @@
 package sample;
+
+import java.io.IOException;
+
 /**
  * Enrollment
  */
@@ -13,8 +16,7 @@ public class Enrollment
     String semester;    // 06 chars = 12 bytes
     char grade = '*';   // 01 char = 02 bytes -- Total 30 bytes
 
-    public Enrollment(int eSID, int eCNum, int yr, String sem, char grd) 
-    {
+    public Enrollment(int eSID, int eCNum, int yr, String sem, char grd, EnrollmentRecordsFileManager efilemngr) throws IOException {
         //increase courseCount by one. unique key value
         //so that next course has unique cnum.
         enrollmentCount++;
@@ -24,7 +26,7 @@ public class Enrollment
         this.year = yr;
         this.semester = sem;
         this.grade = grd;
-        this.enrollmentID = enrollmentCount;
+        this.enrollmentID = ((int) efilemngr.getNumberOfRecords()) + 1;
     }
 
 
