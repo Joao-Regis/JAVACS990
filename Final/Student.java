@@ -7,9 +7,6 @@ import java.io.IOException;
  */
 public class Student
 {
-
-    //!!! Add command to keep track of studentCount after reset
-
     public static int studentCount = 0;
     int stid;// = studentCount; // 01 int = 04 bytes
     String name;    // 20 chars = 40 bytes
@@ -17,7 +14,8 @@ public class Student
     String city;    // 20 chars = 40 bytes
     String state;   // 02 chars = 04 bytes -- Total 128 bytes
 
-    public Student( String n, String a, String c, String s, StudentRecordsFileManager sfilemngr) throws IOException {
+    public Student( String n, String a, String c, String s, StudentRecordsFileManager sfilemngr) throws IOException
+    {
         //increase studentCount by one. unique key value
         //so that next student has unique stid.
         studentCount++;
