@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
@@ -40,7 +37,7 @@ public class tabPaneController implements Initializable
     private ChoiceBox<String> ChoiceBoxEnrollmentSemester;
 
     @FXML
-    private ChoiceBox<String> ChoiceBoxEnrollmentYear;
+    private ChoiceBox<Integer> choiceBoxEnrollmentYear;
 
 
 
@@ -168,10 +165,18 @@ public class tabPaneController implements Initializable
     private Button btnStudentSearchEnrollmentScreen;
 
     @FXML
-    private ChoiceBox choiceBoxEnrollmentStudents;
+    private ChoiceBox<Integer> choiceBoxEnrollmentStudent;
 
     @FXML
-    private ChoiceBox choiceBoxEnrollmentCourse;
+    private ChoiceBox<Integer> choiceBoxEnrollmentCourse;
+
+    @FXML
+    private ChoiceBox<Integer> choiceBoxEnrollmentSearchByStudent;
+
+    @FXML
+    private TextArea textAreaEnrollmentSearchResult;
+
+
 
 
     /*public int qtyOfStudentRecords() throws IOException {
@@ -186,9 +191,15 @@ public class tabPaneController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         ChoiceBoxEnrollmentSemester.getItems().addAll("Spring", "Summer", "Fall", "Winter");
-        ChoiceBoxEnrollmentYear.getItems().addAll("2018", "2019", "2020");
+        choiceBoxEnrollmentYear.getItems().addAll(2019, 2020);
+
         choiceBoxStudents.getItems().add("1");
         choiceBoxCourse.getItems().add("1");
+
+        choiceBoxEnrollmentStudent.getItems().add(1);
+        choiceBoxEnrollmentCourse.getItems().add(1);
+
+        choiceBoxEnrollmentSearchByStudent.getItems().add(1);
 
         /*long numOfStudentRecordsLong = 0;
         try {
@@ -260,6 +271,7 @@ public class tabPaneController implements Initializable
             sfile.CreateStudentFile(student);
 
         }
+
         else
         if(mouseEvent.getSource() == btnStudentSearch)
         {
@@ -274,6 +286,43 @@ public class tabPaneController implements Initializable
             txtFldStudentAddressSearchResult.setText(student.getAddress());
             txtFldStudentCitySearchResult.setText(student.getCity());
             txtFieldStudentStateSearchResult.setText(student.getState());
+
+        }
+        else
+        if(mouseEvent.getSource() == btnStudentSearchEnrollmentScreen)
+        {
+            Enrollment enrollment;
+            int studentToSearchForInt = choiceBoxEnrollmentSearchByStudent.getValue();
+            //String studentToSearchForString = txtFldStudentToSearchFor.getText();
+            //int convertedStudentID = Integer.parseInt(studentToSearchForString);
+            enrollment = efile.ReadEnrollmentFile(studentToSearchForInt);
+
+            // Display the record.
+            textAreaEnrollmentSearchResult.setText(
+                    "Student ID: " + enrollment.geteSID() +
+                    "CNum: " + enrollment.geteCNum() +
+                    "Year: " + enrollment.getYear() +
+                    "Semester: " + enrollment.getSemester() +
+                    "Grade: " + enrollment.getGrade() +
+                    "Enrollment ID: " + enrollment.getEnrollmentID());
+
+            //"Student ID: " + enrollment.geteSID();
+            System.out.println("CNum: " + enrollment.geteCNum());
+            System.out.println("Year: " +
+                    enrollment.getYear());
+            System.out.println("Semester: " +
+                    enrollment.getSemester());
+            System.out.println("Grade: " +
+                    enrollment.getGrade());
+            System.out.println("Enrollment ID: " +
+                    enrollment.getEnrollmentID());
+
+
+            /*txtFldStudentIDSearchResult.setText(Integer.toString(student.getStid()));
+            txtFldStudentFullNameSearchResult.setText(student.getName());
+            txtFldStudentAddressSearchResult.setText(student.getAddress());
+            txtFldStudentCitySearchResult.setText(student.getCity());
+            txtFieldStudentStateSearchResult.setText(student.getState());*/
 
         }
         else
@@ -306,7 +355,15 @@ public class tabPaneController implements Initializable
         else
         if(mouseEvent.getSource() == btnAddCreateEnrollment)
         {
-            Enrollment enrollment;
+            int enrStudentID = choiceBoxEnrollmentStudent.getValue();
+            int enrCourseNum = choiceBoxEnrollmentCourse.getValue();
+            int enrYr = choiceBoxEnrollmentYear.getValue();
+            String enrSem = ChoiceBoxEnrollmentSemester.getValue();
+            char enrGRd;
+
+
+            Enrollment enrollment = new Enrollment(enrStudentID, enrCourseNum, enrYr, enrSem, efile);
+            efile.CreateEnrollmentFile(enrollment);
 
 
 
@@ -327,6 +384,20 @@ public class tabPaneController implements Initializable
 
         }
         else
+        if(mouseEvent.getSource() == choiceBoxEnrollmentSearchByStudent)
+        {
+            long numOfStudentRecordsLong = sfile.getNumberOfRecords();
+            int numOfStudentRecordsInt = (int)numOfStudentRecordsLong;
+
+            choiceBoxEnrollmentSearchByStudent.getItems().clear();
+
+            for (int i = 1; i <= numOfStudentRecordsInt; i++)
+            {
+                choiceBoxEnrollmentSearchByStudent.getItems().add(i);
+            }
+
+        }
+        else
         if(mouseEvent.getSource() == choiceBoxCourse)
         {
             long numOfCourseRecordsLong = sfile.getNumberOfRecords();
@@ -342,17 +413,16 @@ public class tabPaneController implements Initializable
 
         }
         else
-        if(mouseEvent.getSource() == choiceBoxEnrollmentStudents)
+        if(mouseEvent.getSource() == choiceBoxEnrollmentStudent)
         {
             long numOfStudentRecordsLong = sfile.getNumberOfRecords();
             int numOfStudentRecordsInt = (int)numOfStudentRecordsLong;
 
-            choiceBoxEnrollmentStudents.getItems().clear();
+            choiceBoxEnrollmentStudent.getItems().clear();
 
             for (int i = 1; i <= numOfStudentRecordsInt; i++)
             {
-                String count = String.valueOf(i);
-                choiceBoxEnrollmentStudents.getItems().add(count);
+                choiceBoxEnrollmentStudent.getItems().add(i);
             }
 
         }
@@ -366,8 +436,7 @@ public class tabPaneController implements Initializable
 
             for (int i = 1; i <= numOfCourseRecordsInt; i++)
             {
-                String count = String.valueOf(i);
-                choiceBoxEnrollmentCourse.getItems().add(count);
+                choiceBoxEnrollmentCourse.getItems().add(i);
             }
 
 
@@ -978,8 +1047,6 @@ public class tabPaneController implements Initializable
         EnrollmentRecordsFileManager file = aFile;
         int stid = stdntID;
 
-        //int recordNumber;   // Record number
-        //String again;       // Want to change another one?
         String sure;        // Is the user sure?
         Enrollment enrollment; // To reference an enrollment
 
@@ -1060,8 +1127,6 @@ public class tabPaneController implements Initializable
         EnrollmentRecordsFileManager file = aFile;
         int crsNum = courseNum ;
 
-        //int recordNumber;   // Record number
-        //String again;       // Want to change another one?
         String sure;        // Is the user sure?
         Enrollment enrollment; // To reference an enrollment
 
