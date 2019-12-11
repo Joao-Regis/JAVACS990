@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -201,9 +202,14 @@
                         <Label text="Enter Student ID" />
                         <Button fx:id="btnStudentSearchEnrollmentScreen" mnemonicParsing="false" onMouseClicked="#handleBtnClick" prefHeight="30.0" prefWidth="173.0" text="Search Student" GridPane.columnIndex="2" />
                         <TextField fx:id="txtFldStudentSearch2" GridPane.columnIndex="1" />
-                        <TextField fx:id="txtFldStudentToSearchForEnrollmentScreen" GridPane.columnIndex="1" />
+                        <ChoiceBox fx:id="choiceBoxEnrollmentSearchByStudent" onMouseClicked="#handleBtnClick" prefWidth="150.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
+                  <AnchorPane layoutX="97.0" layoutY="95.0" prefHeight="301.0" prefWidth="632.0">
+                     <children>
+                        <TextArea fx:id="textAreaEnrollmentSearchResult" prefHeight="234.0" prefWidth="608.0" />
+                     </children>
+                  </AnchorPane>
                </children></AnchorPane>
         </content>
       </Tab>
@@ -246,7 +252,7 @@
                         <Label text="Year (from 2018 onward only) (Required)" GridPane.rowIndex="2" />
                         <Label text="Semester (Spring, Summer, Winter or Fall) (Req)" GridPane.rowIndex="3" />
                         <ChoiceBox fx:id="ChoiceBoxEnrollmentSemester" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ChoiceBox fx:id="ChoiceBoxEnrollmentYear" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ChoiceBox fx:id="choiceBoxEnrollmentYear" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ChoiceBox fx:id="choiceBoxEnrollmentStudent" onMouseClicked="#handleBtnClick" prefWidth="150.0" GridPane.columnIndex="1" />
                         <ChoiceBox fx:id="choiceBoxEnrollmentCourse" onMouseClicked="#handleBtnClick" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
